@@ -8,27 +8,25 @@ import FAQSection from "@/components/sections/FAQSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import CTASection from "@/components/sections/CTASection";
 import ContactSection from "@/components/sections/ContactSection";
-import heroHome from "@/assets/hero-home.jpg";
-import heroPayroll from "@/assets/hero-payroll.jpg";
+import DashboardMockup from "@/components/sections/DashboardMockup";
+import IconBenefitStrip from "@/components/sections/IconBenefitStrip";
+import InlineTestimonial from "@/components/sections/InlineTestimonial";
 import heroTaxes from "@/assets/hero-taxes.jpg";
 import heroCfo from "@/assets/hero-cfo.jpg";
-import heroAp from "@/assets/hero-ap.jpg";
-import heroAr from "@/assets/hero-ar.jpg";
-import heroConsulting from "@/assets/hero-consulting.jpg";
-import heroService1 from "@/assets/hero-service-1.jpg";
-import { CheckCircle, ArrowRight } from "lucide-react";
+import { CheckCircle, ArrowRight, Cloud, Zap, Shield, Clock, Users, FileText, CreditCard, Receipt, TrendingUp, BarChart3, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type T = Record<Lang, string>;
 
-const heroImages: Record<string, string> = {
-  bookkeeping: heroHome,
-  payroll: heroPayroll,
-  taxes: heroTaxes,
-  "fractional-cfo": heroCfo,
-  "accounts-payable": heroAp,
-  "accounts-receivable": heroAr,
-  "consulting-advisory": heroConsulting,
+/* Hero variant + image per service */
+const heroConfig: Record<string, { variant: "cinematic" | "split" | "centered" | "editorial"; heroImage?: string }> = {
+  bookkeeping: { variant: "split" },
+  payroll: { variant: "centered" },
+  taxes: { variant: "cinematic", heroImage: undefined }, // will use heroTaxes
+  "fractional-cfo": { variant: "cinematic" }, // will use heroCfo
+  "accounts-payable": { variant: "split" },
+  "accounts-receivable": { variant: "split" },
+  "consulting-advisory": { variant: "editorial" },
 };
 
 const accentClasses: Record<string, { border: string; bg: string; text: string }> = {
@@ -120,7 +118,6 @@ const serviceStats: Record<string, { value: string; label: T }[]> = {
   ],
 };
 
-/* Cross-link mapping: service slug → related service slug */
 const crossLinks: Record<string, string> = {
   bookkeeping: "payroll",
   payroll: "bookkeeping",
@@ -130,12 +127,59 @@ const crossLinks: Record<string, string> = {
   "consulting-advisory": "fractional-cfo",
 };
 
+/* Icon benefit strip data per service */
+const benefitStripData: Record<string, { icon: any; label: { en: string; fr: string } }[]> = {
+  bookkeeping: [
+    { icon: Cloud, label: { en: "Cloud-Based", fr: "Infonuagique" } },
+    { icon: Zap, label: { en: "Auto-Reconciled", fr: "Auto-rapproché" } },
+    { icon: Shield, label: { en: "Error-Free", fr: "Sans erreur" } },
+    { icon: Clock, label: { en: "Real-Time Access", fr: "Accès temps réel" } },
+    { icon: BarChart3, label: { en: "Monthly Reports", fr: "Rapports mensuels" } },
+  ],
+  payroll: [
+    { icon: Users, label: { en: "All Employee Types", fr: "Tous types d'employés" } },
+    { icon: Zap, label: { en: "Automated", fr: "Automatisé" } },
+    { icon: Shield, label: { en: "CRA Compliant", fr: "Conforme ARC" } },
+    { icon: Clock, label: { en: "On-Time Every Time", fr: "À temps, chaque fois" } },
+  ],
+  taxes: [
+    { icon: FileText, label: { en: "All Filings", fr: "Toutes déclarations" } },
+    { icon: Shield, label: { en: "Audit Support", fr: "Support vérification" } },
+    { icon: TrendingUp, label: { en: "Tax Optimization", fr: "Optimisation fiscale" } },
+    { icon: Clock, label: { en: "Never Miss a Deadline", fr: "Jamais d'échéance ratée" } },
+  ],
+};
+
+/* Inline testimonial data per service */
+const testimonialData: Record<string, { quote: { en: string; fr: string }; name: string; company: string }> = {
+  bookkeeping: {
+    quote: { en: "Namaca transformed our bookkeeping from a monthly headache into something we never think about. Our books are always clean, always current.", fr: "Namaca a transformé notre tenue de livres d'un mal de tête mensuel en quelque chose à quoi nous ne pensons plus jamais." },
+    name: "Sarah Chen",
+    company: "TechFlow Solutions",
+  },
+  payroll: {
+    quote: { en: "We switched to Namaca for payroll and haven't had a single issue. Our team gets paid on time, every time. The peace of mind is worth every penny.", fr: "Nous sommes passés à Namaca pour la paie et n'avons eu aucun problème. Notre équipe est payée à temps, chaque fois." },
+    name: "Marc Dubois",
+    company: "Pixel & Code Agency",
+  },
+  "fractional-cfo": {
+    quote: { en: "Having a fractional CFO from Namaca gave us the financial clarity we needed to close our Series A. They're like having a full-time CFO at a fraction of the cost.", fr: "Avoir un directeur financier à temps partiel de Namaca nous a donné la clarté financière nécessaire pour clôturer notre Série A." },
+    name: "Priya Sharma",
+    company: "GreenLeaf Wellness",
+  },
+  "consulting-advisory": {
+    quote: { en: "The strategic guidance from Namaca helped us identify $200K in savings we didn't know existed. They don't just crunch numbers — they think like business partners.", fr: "Les conseils stratégiques de Namaca nous ont aidés à identifier 200 000$ d'économies que nous ignorions." },
+    name: "David Thompson",
+    company: "NorthStar Logistics",
+  },
+};
+
 /* ─── Reusable section components ─── */
 
 function PainSection({ points, lang }: { points: string[]; lang: Lang }) {
   if (!points.length) return null;
   return (
-    <section className="py-16 md:py-20 bg-cream" data-reveal>
+    <section className="py-16 md:py-20 bg-background" data-reveal>
       <div className="container mx-auto px-4 max-w-3xl text-center">
         <p data-reveal-child className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-4">
           {lang === "en" ? "Sound Familiar?" : "Ça vous dit quelque chose?"}
@@ -156,15 +200,15 @@ function PainSection({ points, lang }: { points: string[]; lang: Lang }) {
 function StatsInline({ stats, lang }: { stats: { value: string; label: T }[]; lang: Lang }) {
   if (!stats.length) return null;
   return (
-    <section className="bg-cream py-14" data-reveal>
+    <section className="bg-navy py-14" data-reveal>
       <div className="container mx-auto px-4">
         <p data-reveal-child className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-8 text-center">
-          {lang === "en" ? "Proven Results" : "Résultats prouvés"}
+          {lang === "en" ? "By the Numbers" : "En chiffres"}
         </p>
         <div className="flex flex-wrap justify-center gap-12 md:gap-20">
           {stats.map((s, i) => (
             <div key={i} className="text-center" data-reveal-child>
-              <div className="font-display text-4xl md:text-5xl text-navy mb-2">{s.value}</div>
+              <div className="font-display text-5xl md:text-6xl text-primary-foreground mb-2">{s.value}</div>
               <div className="text-xs uppercase tracking-wider text-accent font-sans font-semibold">{t(s.label, lang)}</div>
             </div>
           ))}
@@ -183,7 +227,7 @@ function ProcessVertical({ service, accent, lang }: { service: typeof services[0
         <div className="relative pl-8 border-l-2 border-accent/20 space-y-12">
           {service.process.map((p, i) => (
             <div key={i} className="relative" data-reveal-child>
-              <div className="absolute -left-[41px] top-1 w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center text-sm font-bold font-sans">{p.step}</div>
+              <div className="absolute -left-[41px] top-1 w-8 h-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-sm font-bold font-sans">{p.step}</div>
               <h3 className="font-display text-xl text-foreground mb-2">{t(p.title, lang)}</h3>
               <p className="text-muted-foreground leading-relaxed">{t(p.desc, lang)}</p>
             </div>
@@ -200,7 +244,7 @@ function CrossLinkSection({ currentSlug, lang }: { currentSlug: string; lang: La
   const related = services.find((s) => s.slug === relatedSlug);
   if (!related) return null;
   return (
-    <section className="py-12 bg-muted/30" data-reveal>
+    <section className="py-12 bg-cream" data-reveal>
       <div className="container mx-auto px-4 max-w-3xl text-center" data-reveal-child>
         <p className="text-sm text-muted-foreground mb-3">
           {lang === "en" ? "Clients who use this service also benefit from" : "Les clients qui utilisent ce service bénéficient aussi de"}
@@ -218,7 +262,7 @@ function CrossLinkSection({ currentSlug, lang }: { currentSlug: string; lang: La
 
 function BenefitsSection({ service, accent, idx, lang }: { service: typeof services[0]; accent: typeof accentClasses["bookkeeping"]; idx: number; lang: Lang }) {
   return (
-    <section className="py-20 md:py-28 bg-background" data-reveal>
+    <section className="py-20 md:py-28 bg-cream" data-reveal>
       <div className="container mx-auto px-4">
         <p data-reveal-child className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-4">{lang === "en" ? "The Solution" : "La solution"}</p>
         <h2 data-reveal-child className="font-display text-3xl md:text-4xl text-foreground mb-14 max-w-lg">{lang === "en" ? "What you get with Namaca" : "Ce que vous obtenez avec Namaca"}</h2>
@@ -236,7 +280,7 @@ function BenefitsSection({ service, accent, idx, lang }: { service: typeof servi
           </div>
         )}
 
-        {/* Layout 1: Icon cards (Payroll) — no empty placeholder boxes */}
+        {/* Layout 1: Icon cards (Payroll) */}
         {idx === 1 && (
           <div className="grid sm:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {service.benefits.map((b, i) => (
@@ -270,7 +314,7 @@ function BenefitsSection({ service, accent, idx, lang }: { service: typeof servi
         {idx === 3 && (
           <div className="max-w-4xl mx-auto space-y-8">
             <div className="grid md:grid-cols-2 gap-6 mb-8" data-reveal-child>
-              <div className="rounded-2xl bg-muted/50 p-8 text-center border border-border/40">
+              <div className="rounded-2xl bg-card p-8 text-center border border-border/40">
                 <div className="font-display text-3xl text-foreground mb-2">$300K+</div>
                 <div className="text-sm text-muted-foreground">{lang === "en" ? "Full-Time CFO Annual Cost" : "Coût annuel d'un DG à temps plein"}</div>
               </div>
@@ -294,7 +338,7 @@ function BenefitsSection({ service, accent, idx, lang }: { service: typeof servi
         {idx === 4 && (
           <div className="max-w-4xl mx-auto space-y-0 divide-y divide-border/60">
             {service.benefits.map((b, i) => (
-              <div key={i} className="grid md:grid-cols-[60px_1fr] gap-6 py-8 group hover:bg-muted/30 px-4 -mx-4 rounded-xl transition-colors" data-reveal-child>
+              <div key={i} className="grid md:grid-cols-[60px_1fr] gap-6 py-8 group hover:bg-card/50 px-4 -mx-4 rounded-xl transition-colors" data-reveal-child>
                 <div className={`font-display text-3xl ${accent.text}`}>{String(i + 1).padStart(2, "0")}</div>
                 <div>
                   <h3 className="font-display text-xl text-foreground mb-2 group-hover:text-accent transition-colors">{t(b.title, lang)}</h3>
@@ -350,21 +394,41 @@ export default function ServicePage() {
   const accent = accentClasses[service.slug] || { border: "border-accent", bg: "bg-accent/10", text: "text-accent" };
   const points = painPoints[service.slug]?.[lang] || [];
   const heroTitle = heroHeadlines[service.slug] || service.title;
-  const heroImg = heroImages[service.slug] || heroService1;
   const stats = serviceStats[service.slug] || [];
   const idx = services.indexOf(service);
+  const config = heroConfig[service.slug] || { variant: "split" as const };
+
+  /* Dashboard mockup as visual element */
+  const mockupType = service.slug as "bookkeeping" | "payroll" | "taxes" | "fractional-cfo" | "accounts-payable" | "accounts-receivable";
+  const dashboardVisual = <DashboardMockup service={mockupType} />;
+
+  /* Hero images only for cinematic variants */
+  const heroImg = service.slug === "taxes" ? heroTaxes : service.slug === "fractional-cfo" ? heroCfo : undefined;
 
   const heroSection = (
     <Hero
-      variant="cinematic"
+      variant={config.variant}
       eyebrow={t(service.title, lang)}
       title={t(heroTitle, lang)}
       subtitle={t(service.heroSubtitle, lang)}
       ctaText={lang === "en" ? "Get Started" : "Commencer"}
       ctaLink="/expertise#contact"
       heroImage={heroImg}
+      visualElement={config.variant !== "editorial" ? dashboardVisual : undefined}
     />
   );
+
+  /* Icon benefit strip */
+  const stripData = benefitStripData[service.slug];
+  const iconStrip = stripData ? (
+    <IconBenefitStrip items={stripData.map(d => ({ icon: d.icon, label: t(d.label, lang) }))} />
+  ) : null;
+
+  /* Inline testimonial */
+  const tData = testimonialData[service.slug];
+  const inlineTestimonial = tData ? (
+    <InlineTestimonial quote={t(tData.quote, lang)} name={tData.name} company={tData.company} />
+  ) : null;
 
   const painSection = <PainSection points={points} lang={lang} />;
   const statsSection = <StatsInline stats={stats} lang={lang} />;
@@ -376,31 +440,30 @@ export default function ServicePage() {
   const contactSection = <ContactSection />;
   const ctaSection = <CTASection />;
 
-  /* ─── Unique section ordering per service ─── */
+  /* ─── Unique section ordering per service with new components ─── */
+  /* Background alternation enforced: hero (varies) → strip (navy) → pain (white) → benefits (cream) → stats (navy) → process (white) → etc. */
   const sectionOrder: Record<number, React.ReactNode[]> = {
-    // Bookkeeping: Hero → Pain → Benefits → Process → Cross-link → Testimonial → FAQ → Contact → CTA
-    0: [heroSection, painSection, benefitsSection, processSection, crossLinkSection, testimonialsSection, faqSection, contactSection, ctaSection],
-    // Payroll: Hero → Stats → Pain → Benefits → Process → Cross-link → Testimonial → FAQ → CTA
-    1: [heroSection, statsSection, painSection, benefitsSection, processSection, crossLinkSection, testimonialsSection, faqSection, ctaSection],
-    // Taxes: Hero → Pain → Benefits → Stats → Process → FAQ → Contact → CTA
-    2: [heroSection, painSection, benefitsSection, statsSection, processSection, faqSection, contactSection, ctaSection],
-    // CFO: Hero → Benefits (includes comparison) → Pain → Process → Stats → Testimonial → CTA
-    3: [heroSection, benefitsSection, painSection, processSection, statsSection, crossLinkSection, testimonialsSection, ctaSection],
-    // AP: Hero → Pain → Process → Benefits → Stats → Cross-link → FAQ → CTA
+    // Bookkeeping: Split hero (cream) → Icon strip (navy) → Pain (white) → Benefits (cream) → Inline quote (cream) → Process (white) → Cross-link → FAQ → CTA
+    0: [heroSection, iconStrip, painSection, benefitsSection, inlineTestimonial, statsSection, processSection, crossLinkSection, faqSection, ctaSection],
+    // Payroll: Centered hero (cream) → Icon strip (navy) → Stats (navy) → Pain (white) → Benefits (cream) → Inline quote → Process (white) → Cross-link → FAQ → CTA
+    1: [heroSection, iconStrip, statsSection, painSection, benefitsSection, inlineTestimonial, processSection, crossLinkSection, faqSection, ctaSection],
+    // Taxes: Cinematic hero → Icon strip (navy) → Pain (white) → Benefits (cream) → Stats (navy) → Process (white) → FAQ → Contact → CTA
+    2: [heroSection, iconStrip, painSection, benefitsSection, statsSection, processSection, faqSection, contactSection, ctaSection],
+    // CFO: Cinematic hero → Benefits (cream, comparison) → Pain (white) → Inline quote → Process (white) → Stats (navy) → Cross-link → Testimonial → CTA
+    3: [heroSection, benefitsSection, painSection, inlineTestimonial, processSection, statsSection, crossLinkSection, testimonialsSection, ctaSection],
+    // AP: Split hero (cream) → Pain (white) → Process (white) → Benefits (cream) → Stats (navy) → Cross-link → FAQ → CTA
     4: [heroSection, painSection, processSection, benefitsSection, statsSection, crossLinkSection, faqSection, ctaSection],
-    // AR: Hero → Pain → Benefits → Stats → Process → Cross-link → FAQ → CTA
+    // AR: Split hero (cream) → Pain (white) → Benefits (cream) → Stats (navy) → Process (white) → Cross-link → FAQ → CTA
     5: [heroSection, painSection, benefitsSection, statsSection, processSection, crossLinkSection, faqSection, ctaSection],
-    // Consulting: Hero → Pain → Benefits → Process → Stats → Testimonial → Contact → CTA
-    6: [heroSection, painSection, benefitsSection, processSection, statsSection, crossLinkSection, testimonialsSection, contactSection, ctaSection],
+    // Consulting: Editorial hero (navy) → Pain (white) → Benefits (cream) → Inline quote → Process (white) → Stats (navy) → Cross-link → Contact → CTA
+    6: [heroSection, painSection, benefitsSection, inlineTestimonial, processSection, statsSection, crossLinkSection, contactSection, ctaSection],
   };
 
   const sections = sectionOrder[idx] || [heroSection, painSection, benefitsSection, processSection, testimonialsSection, faqSection, contactSection, ctaSection];
 
   return (
     <Layout>
-      {sections.map((section, i) => (
-        <div key={i}>{section}</div>
-      ))}
+      {sections.map((section, i) => section ? <div key={i}>{section}</div> : null)}
     </Layout>
   );
 }

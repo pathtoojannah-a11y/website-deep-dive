@@ -10,6 +10,7 @@ import StatsSection from "@/components/sections/StatsSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import CTASection from "@/components/sections/CTASection";
+import DashboardMockup from "@/components/sections/DashboardMockup";
 import heroHome from "@/assets/hero-home.jpg";
 import beforeAfterSplit from "@/assets/before-after-split.png";
 import { CheckCircle, Cloud, BarChart3, Rocket, Monitor, Users, Shield, Zap } from "lucide-react";
@@ -36,7 +37,7 @@ export default function Index() {
 
   return (
     <Layout>
-      {/* 1. Cinematic Hero */}
+      {/* 1. Cinematic Hero with floating dashboard mockup */}
       <Hero
         variant="cinematic"
         eyebrow={lang === "en" ? "100% Cloud-Based Accounting" : "Comptabilité 100% infonuagique"}
@@ -46,8 +47,9 @@ export default function Index() {
         ghostCtaText={lang === "en" ? "Explore Services" : "Découvrir nos services"}
         ghostCtaLink="/#services"
         heroImage={heroHome}
+        visualElement={<DashboardMockup service="home" className="shadow-2xl shadow-black/20" />}
       >
-        {/* Trust strip — clean editorial, no icons */}
+        {/* Trust strip */}
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-primary-foreground/50 text-sm font-sans font-medium tracking-wide">
           <span>{lang === "en" ? "200+ businesses served" : "200+ entreprises desservies"}</span>
           <span className="text-primary-foreground/20">·</span>
@@ -60,12 +62,12 @@ export default function Index() {
       {/* 2. Partner Logo Strip */}
       <PartnersBar />
 
-      {/* 3. Service Showcase — Horizontal list */}
+      {/* 3. Service Showcase */}
       <div id="services">
         <ServiceShowcase />
       </div>
 
-      {/* 4. Split Media: Why Namaca — using before/after split image */}
+      {/* 4. Split Media: Why Namaca */}
       <section className="py-20 md:py-28 bg-cream" data-reveal>
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -114,7 +116,7 @@ export default function Index() {
       {/* 5. Dark Impact Stats */}
       <StatsSection />
 
-      {/* 6. Editorial Spread: Our Approach — all white/cream cards with colored borders */}
+      {/* 6. Editorial Spread: Our Approach */}
       <section className="py-20 md:py-28 bg-background" data-reveal>
         <div className="container mx-auto px-4 max-w-5xl">
           <p data-reveal-child className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-4">{lang === "en" ? "Our Approach" : "Notre approche"}</p>
@@ -131,7 +133,6 @@ export default function Index() {
                 }`}
                 data-reveal-child
               >
-                {/* Faded index number */}
                 <span className="absolute top-4 right-6 font-display text-7xl leading-none pointer-events-none select-none text-foreground/[0.04]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
