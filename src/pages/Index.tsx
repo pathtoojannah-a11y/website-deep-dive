@@ -4,41 +4,24 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { t, serviceLinks, Lang } from "@/i18n/translations";
 import Layout from "@/components/Layout";
 import Hero from "@/components/sections/Hero";
+import PartnersBar from "@/components/sections/PartnersBar";
+import ServiceShowcase from "@/components/sections/ServiceShowcase";
 import StatsSection from "@/components/sections/StatsSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
-import PartnersBar from "@/components/sections/PartnersBar";
-import CTASection from "@/components/sections/CTASection";
 import FAQSection from "@/components/sections/FAQSection";
-import { BookOpen, Users, FileText, TrendingUp, CreditCard, Receipt, Lightbulb, CheckCircle, Monitor, Cloud, BarChart3, Rocket } from "lucide-react";
+import CTASection from "@/components/sections/CTASection";
+import heroHome from "@/assets/hero-home.jpg";
+import heroService2 from "@/assets/hero-service-2.jpg";
+import { CheckCircle, Cloud, BarChart3, Rocket, Monitor, Users, Shield, Zap } from "lucide-react";
 
 type T = Record<Lang, string>;
 
-const iconMap: Record<string, any> = { BookOpen, Users, FileText, TrendingUp, CreditCard, Receipt, Lightbulb };
-const serviceIcons = ["BookOpen", "Users", "FileText", "TrendingUp", "CreditCard", "Receipt", "Lightbulb"];
-const serviceDescs: T[] = [
-  { en: "Cloud-based bookkeeping powered by Xero.", fr: "Nous prenons en charge votre comptabilité, de la saisie des transactions à la production de vos états financiers." },
-  { en: "Automated payroll processing with Gusto.", fr: "Un service de paie complet, du calcul des salaires à la production des feuillets fiscaux." },
-  { en: "GST/HST filings and corporate tax returns.", fr: "Nous préparons et produisons vos rapports de taxes (TPS/TVH/TVQ) dans les délais." },
-  { en: "Strategic financial leadership on demand.", fr: "Leadership financier stratégique à la demande pour les entreprises en croissance." },
-  { en: "Automated bill payments and vendor management.", fr: "Gestion complète de vos comptes fournisseurs et paiements automatisés." },
-  { en: "Invoice tracking and collections.", fr: "Suivi de vos factures clients et optimisation de vos encaissements." },
-  { en: "Expert guidance on strategy and compliance.", fr: "Accompagnement expert en stratégie financière et conformité." },
-];
-
-const whyTabs = [
-  { icon: Monitor, label: { en: "Clean Desk", fr: "Bureau propre vs encombré" } as T, img: "https://namaca.ca/wp-content/uploads/2024/11/Frame-1000003751-1.png", points: { en: ["All financial documents organized in the cloud", "No more lost receipts or missing invoices", "Real-time access to your financial data", "Automated data entry reduces errors"], fr: ["Tous vos documents financiers organisés dans le nuage", "Plus de reçus perdus ni de factures manquantes", "Accès en temps réel à vos données financières", "La saisie automatisée réduit les erreurs"] } },
-  { icon: Cloud, label: { en: "Cloud Access", fr: "Accès complet dans le cloud" } as T, img: "https://namaca.ca/wp-content/uploads/2024/11/Frame-1000003751-2.png", points: { en: ["Access your books from any device", "Bank-level security for all data", "Automatic backups", "Real-time team collaboration"], fr: ["Accédez à vos livres depuis n'importe quel appareil", "Sécurité de niveau bancaire pour toutes vos données", "Sauvegardes automatiques", "Collaboration en temps réel avec votre équipe"] } },
-  { icon: BarChart3, label: { en: "Gain Clarity", fr: "Gagner en clarté" } as T, img: "https://namaca.ca/wp-content/uploads/2024/11/Frame-1000003751-3.png", points: { en: ["Custom dashboards tailored to your KPIs", "Monthly reports with actionable insights", "Cash flow visibility at a glance", "Data-driven decision making"], fr: ["Tableaux de bord personnalisés pour vos KPI", "Rapports mensuels avec recommandations concrètes", "Visibilité du flux de trésorerie en un coup d'œil", "Prise de décisions basée sur les données"] } },
-  { icon: Rocket, label: { en: "Beyond Books", fr: "Au-delà de la comptabilité" } as T, img: "https://namaca.ca/wp-content/uploads/2024/11/Frame-1000003751-4.png", points: { en: ["Strategic financial advisory", "Fractional CFO services", "Tax planning and optimization", "Industry-specific expertise"], fr: ["Conseil financier stratégique", "Services de directeur financier à temps partiel", "Planification et optimisation fiscale", "Expertise sectorielle approfondie"] } },
-];
-
-const whyList: { title: T; desc: T }[] = [
-  { title: { en: "100% Online & Tech-Driven", fr: "100% En ligne et technologique" }, desc: { en: "Everything runs in the cloud. No software to install, no paper to manage.", fr: "Tout fonctionne dans le nuage. Aucun logiciel à installer, aucun papier à gérer." } },
-  { title: { en: "No More Re-training", fr: "Fini le recyclage" }, desc: { en: "We adapt to your tools and workflows — not the other way around.", fr: "Nous nous adaptons à vos outils et processus — pas l'inverse." } },
-  { title: { en: "Gain Clarity", fr: "Gagner en clarté" }, desc: { en: "Real-time dashboards and monthly reports with actionable insights.", fr: "Tableaux de bord en temps réel et rapports mensuels avec des recommandations concrètes." } },
-  { title: { en: "Beyond Bookkeeping", fr: "Au-delà de la comptabilité" }, desc: { en: "Strategic insights that drive growth and optimize your operations.", fr: "Perspectives stratégiques qui stimulent la croissance et optimisent vos opérations." } },
-  { title: { en: "Expert Solutions", fr: "Solutions expertes" }, desc: { en: "Deep expertise across industries — tech, e-commerce, healthcare, and more.", fr: "Expertise approfondie dans tous les secteurs — techno, commerce en ligne, santé et plus." } },
-  { title: { en: "Value Innovation", fr: "Innovation de valeur" }, desc: { en: "Latest fintech tools to deliver more value at lower cost.", fr: "Les derniers outils fintech pour offrir plus de valeur à moindre coût." } },
+/* Editorial "Our Approach" blocks — each styled uniquely */
+const approach: { title: T; desc: T }[] = [
+  { title: { en: "Clean Desk Policy", fr: "Bureau propre" }, desc: { en: "All financial documents organized in the cloud. No more lost receipts or missing invoices. Your books stay pristine.", fr: "Tous vos documents financiers organisés dans le nuage. Plus de reçus perdus ni de factures manquantes." } },
+  { title: { en: "Cloud-First Access", fr: "Accès infonuagique" }, desc: { en: "Access your financials from anywhere, any device. Bank-level security. Real-time team collaboration.", fr: "Accédez à vos finances de partout, depuis n'importe quel appareil. Sécurité bancaire. Collaboration en temps réel." } },
+  { title: { en: "Gain Clarity", fr: "Gagner en clarté" }, desc: { en: "Custom dashboards for your KPIs. Monthly reports with actionable insights. Cash flow visibility at a glance.", fr: "Tableaux de bord personnalisés pour vos KPI. Rapports mensuels avec recommandations concrètes." } },
+  { title: { en: "Beyond Bookkeeping", fr: "Au-delà de la comptabilité" }, desc: { en: "Strategic financial advisory, fractional CFO services, tax planning, and industry-specific expertise.", fr: "Conseil financier stratégique, services de directeur financier, planification fiscale et expertise sectorielle." } },
 ];
 
 const homeFAQ: { q: T; a: T }[] = [
@@ -50,111 +33,116 @@ const homeFAQ: { q: T; a: T }[] = [
 
 export default function Index() {
   const { lang } = useLanguage();
-  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <Layout>
-      {/* Hero */}
+      {/* 1. Cinematic Hero */}
       <Hero
-        badge={lang === "en" ? "100% Cloud-Based" : "100% Infonuagique"}
-        title={lang === "en" ? "The Future of Accounting for SMEs & Startups" : "Le futur de la Comptabilité pour les PME et les entreprises en démarrage"}
-        subtitle={lang === "en" ? "We combine a dedicated team, modern techniques, and the latest technology to deliver cloud-based accounting solutions that help your business thrive." : "Nous combinons une équipe dédiée, des techniques modernes et les dernières technologies pour offrir des solutions comptables infonuagiques qui aident votre entreprise à prospérer."}
-        ctaText={lang === "en" ? "Contact Us" : "Contactez-nous"}
+        variant="cinematic"
+        eyebrow={lang === "en" ? "100% Cloud-Based Accounting" : "Comptabilité 100% infonuagique"}
+        title={lang === "en" ? "Your finances, handled. So you can focus on growth." : "Vos finances, prises en charge. Pour que vous puissiez grandir."}
+        subtitle={lang === "en" ? "We combine a dedicated team, modern techniques, and the latest technology to deliver accounting solutions that help Canadian businesses thrive." : "Nous combinons une équipe dédiée, des techniques modernes et les dernières technologies pour offrir des solutions comptables qui aident les entreprises canadiennes à prospérer."}
+        ctaText={lang === "en" ? "Book a Free Consultation" : "Réserver une consultation gratuite"}
+        ghostCtaText={lang === "en" ? "Explore Services" : "Découvrir nos services"}
+        ghostCtaLink="/#services"
+        heroImage={heroHome}
       >
-        <img
-          src="https://namaca.ca/wp-content/uploads/2024/09/Frame-1000003816.png"
-          alt={lang === "en" ? "Namaca cloud accounting dashboard" : "Tableau de bord comptable Namaca"}
-          className="w-full max-w-lg mx-auto"
-        />
+        {/* Trust strip */}
+        <div className="flex flex-wrap items-center gap-6 text-primary-foreground/40 text-sm font-sans">
+          <div className="flex items-center gap-2"><Users size={16} className="text-gold" /><span>{lang === "en" ? "200+ Businesses Trust Us" : "200+ entreprises nous font confiance"}</span></div>
+          <div className="w-px h-4 bg-primary-foreground/15" />
+          <div className="flex items-center gap-2"><Shield size={16} className="text-gold" /><span>{lang === "en" ? "CPA-Level Expertise" : "Expertise de niveau CPA"}</span></div>
+          <div className="w-px h-4 bg-primary-foreground/15" />
+          <div className="flex items-center gap-2"><Zap size={16} className="text-gold" /><span>{lang === "en" ? "15+ Years Experience" : "15+ ans d'expérience"}</span></div>
+        </div>
       </Hero>
 
-      {/* Why Choose Us Tabs */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12 font-display">
-            {lang === "en" ? "Why Choose Namaca?" : "Pourquoi choisir Namaca?"}
-          </h2>
-          <div className="flex flex-wrap justify-center gap-3 mb-10">
-            {whyTabs.map((tab, i) => {
-              const Icon = tab.icon;
-              return (
-                <button key={i} onClick={() => setActiveTab(i)} className={`flex items-center gap-2 px-5 py-3 rounded-full text-sm font-medium transition-all ${activeTab === i ? "bg-orange text-accent-foreground shadow-md" : "bg-muted text-muted-foreground hover:bg-cream-dark"}`}>
-                  <Icon size={18} />{t(tab.label, lang)}
-                </button>
-              );
-            })}
-          </div>
-          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-            <div className="bg-cream rounded-2xl p-8 md:p-10">
-              <ul className="space-y-4">
-                {whyTabs[activeTab].points[lang].map((point, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <CheckCircle className="text-orange mt-0.5 shrink-0" size={20} />
-                    <span className="text-foreground">{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="hidden md:block">
-              <img src={whyTabs[activeTab].img} alt={t(whyTabs[activeTab].label, lang)} className="w-full rounded-2xl" />
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 2. Partner Logo Strip */}
+      <PartnersBar />
 
-      {/* Services Grid */}
-      <section className="py-20 bg-cream">
+      {/* 3. Service Showcase — Horizontal list */}
+      <div id="services">
+        <ServiceShowcase />
+      </div>
+
+      {/* 4. Split Media: Why Namaca */}
+      <section className="py-20 md:py-28 bg-cream" data-reveal>
         <div className="container mx-auto px-4">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-display">
-              {lang === "en" ? "Services Tailored to Your Unique Needs" : "Service adapté à vos besoins uniques"}
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              {lang === "en" ? "Comprehensive financial solutions tailored to your business needs." : "Solutions financières complètes adaptées aux besoins de votre entreprise."}
-            </p>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div data-reveal-child>
+              <p className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-6">{lang === "en" ? "Why Namaca" : "Pourquoi Namaca"}</p>
+              <h2 className="font-display text-3xl md:text-4xl text-foreground leading-[1.15] mb-6">
+                {lang === "en" ? "We don't just do your books. We give you clarity, confidence, and control." : "Nous ne faisons pas que vos livres. Nous vous donnons clarté, confiance et contrôle."}
+              </h2>
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                {lang === "en" ? "Most accounting firms hand you numbers. We hand you insights. Our cloud-first approach means real-time access, automated workflows, and strategic guidance that actually moves the needle." : "La plupart des cabinets vous donnent des chiffres. Nous vous donnons des perspectives. Notre approche infonuagique signifie un accès en temps réel, des flux de travail automatisés et des conseils stratégiques qui font vraiment la différence."}
+              </p>
+            </div>
+            <div className="hidden lg:block" data-reveal-child>
+              <img src={heroService2} alt="" className="w-full rounded-2xl shadow-2xl" />
+            </div>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {serviceLinks.map((s, i) => {
-              const Icon = iconMap[serviceIcons[i]];
+          {/* Trust pillars */}
+          <div className="grid sm:grid-cols-3 gap-8 mt-16" data-reveal-child>
+            {[
+              { icon: Monitor, stat: "100%", label: { en: "Cloud-Based Operations", fr: "Opérations infonuagiques" } },
+              { icon: BarChart3, stat: "24h", label: { en: "Response Time", fr: "Temps de réponse" } },
+              { icon: Cloud, stat: "Real-time", label: { en: "Financial Visibility", fr: "Visibilité financière" } },
+            ].map((p, i) => {
+              const Icon = p.icon;
               return (
-                <Link key={s.slug} to={`/${s.slug}`} className="bg-background rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all group border border-border/50 hover:-translate-y-1">
-                  <div className="w-12 h-12 rounded-xl bg-orange/10 flex items-center justify-center mb-4 group-hover:bg-orange/20 transition-colors">
-                    <Icon className="text-orange" size={24} />
+                <div key={i} className="text-center">
+                  <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
+                    <Icon className="text-accent" size={22} />
                   </div>
-                  <h3 className="text-lg font-bold text-foreground mb-2">{t(s.label, lang)}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">{t(serviceDescs[i], lang)}</p>
-                  <span className="text-sm font-medium text-orange">{lang === "en" ? "Learn More →" : "En savoir plus →"}</span>
-                </Link>
+                  <div className="font-display text-2xl text-foreground mb-1">{p.stat}</div>
+                  <div className="text-sm text-muted-foreground">{t(p.label, lang)}</div>
+                </div>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* Why Us Numbered */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-14 font-display">
-            {lang === "en" ? "Why Us" : "Pourquoi nous"}
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {whyList.map((item, i) => (
-              <div key={i} className="flex gap-4">
-                <div className="text-5xl font-bold text-orange/20 font-display leading-none select-none">{String(i + 1).padStart(2, "0")}</div>
-                <div>
-                  <h3 className="text-lg font-bold text-foreground mb-1">{t(item.title, lang)}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{t(item.desc, lang)}</p>
-                </div>
+      {/* 5. Dark Impact Stats */}
+      <StatsSection />
+
+      {/* 6. Editorial Spread: Our Approach */}
+      <section className="py-20 md:py-28 bg-background" data-reveal>
+        <div className="container mx-auto px-4 max-w-5xl">
+          <p data-reveal-child className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-4">{lang === "en" ? "Our Approach" : "Notre approche"}</p>
+          <h2 data-reveal-child className="font-display text-3xl md:text-4xl text-foreground mb-14 max-w-lg">{lang === "en" ? "How we transform your back office" : "Comment nous transformons votre comptabilité"}</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {approach.map((block, i) => (
+              <div
+                key={i}
+                className={`relative rounded-2xl p-8 md:p-10 transition-transform hover:-translate-y-1 duration-300 ${
+                  i === 0 ? "bg-navy text-primary-foreground" :
+                  i === 1 ? "bg-card border-l-4 border-accent shadow-md" :
+                  i === 2 ? "bg-card shadow-lg" :
+                  "bg-gradient-to-br from-accent/5 to-gold/5 border border-accent/10"
+                }`}
+                data-reveal-child
+              >
+                {/* Faded index number */}
+                <span className={`absolute top-4 right-6 font-display text-7xl leading-none pointer-events-none select-none ${i === 0 ? "text-primary-foreground/[0.06]" : "text-foreground/[0.04]"}`}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className={`font-display text-xl md:text-2xl mb-3 ${i === 0 ? "" : "text-foreground"}`}>{t(block.title, lang)}</h3>
+                <p className={`text-sm leading-relaxed ${i === 0 ? "text-primary-foreground/60" : "text-muted-foreground"}`}>{t(block.desc, lang)}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <StatsSection />
+      {/* 7. Pull-Quote Testimonial */}
       <TestimonialsSection />
+
+      {/* 8. FAQ */}
       <FAQSection items={homeFAQ} />
-      <PartnersBar />
+
+      {/* 9. CTA Strip */}
       <CTASection />
     </Layout>
   );
