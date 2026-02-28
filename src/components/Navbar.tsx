@@ -46,7 +46,10 @@ export default function Navbar() {
       <div className="container mx-auto flex items-center justify-between h-[72px] px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="Namaca" className="h-9 w-auto" />
+          <div className="flex flex-col items-start">
+            <img src={logo} alt="Namaca" className="h-9 w-auto" />
+            <span className="text-[9px] font-sans font-medium uppercase tracking-[0.12em] text-muted-foreground -mt-0.5">Cloud-Based Accounting</span>
+          </div>
         </Link>
 
         {/* Desktop nav */}

@@ -11,7 +11,7 @@ import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import CTASection from "@/components/sections/CTASection";
 import heroHome from "@/assets/hero-home.jpg";
-import heroService2 from "@/assets/hero-service-2.jpg";
+import beforeAfterSplit from "@/assets/before-after-split.png";
 import { CheckCircle, Cloud, BarChart3, Rocket, Monitor, Users, Shield, Zap } from "lucide-react";
 
 type T = Record<Lang, string>;
@@ -47,13 +47,13 @@ export default function Index() {
         ghostCtaLink="/#services"
         heroImage={heroHome}
       >
-        {/* Trust strip */}
-        <div className="flex flex-wrap items-center gap-6 text-primary-foreground/40 text-sm font-sans">
-          <div className="flex items-center gap-2"><Users size={16} className="text-gold" /><span>{lang === "en" ? "200+ Businesses Trust Us" : "200+ entreprises nous font confiance"}</span></div>
-          <div className="w-px h-4 bg-primary-foreground/15" />
-          <div className="flex items-center gap-2"><Shield size={16} className="text-gold" /><span>{lang === "en" ? "CPA-Level Expertise" : "Expertise de niveau CPA"}</span></div>
-          <div className="w-px h-4 bg-primary-foreground/15" />
-          <div className="flex items-center gap-2"><Zap size={16} className="text-gold" /><span>{lang === "en" ? "15+ Years Experience" : "15+ ans d'expérience"}</span></div>
+        {/* Trust strip — clean editorial, no icons */}
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-primary-foreground/50 text-sm font-sans font-medium tracking-wide">
+          <span>{lang === "en" ? "200+ businesses served" : "200+ entreprises desservies"}</span>
+          <span className="text-primary-foreground/20">·</span>
+          <span>{lang === "en" ? "CPA-level expertise" : "Expertise de niveau CPA"}</span>
+          <span className="text-primary-foreground/20">·</span>
+          <span>{lang === "en" ? "15+ years experience" : "15+ ans d'expérience"}</span>
         </div>
       </Hero>
 
@@ -65,7 +65,7 @@ export default function Index() {
         <ServiceShowcase />
       </div>
 
-      {/* 4. Split Media: Why Namaca */}
+      {/* 4. Split Media: Why Namaca — using before/after split image */}
       <section className="py-20 md:py-28 bg-cream" data-reveal>
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -79,7 +79,14 @@ export default function Index() {
               </p>
             </div>
             <div className="hidden lg:block" data-reveal-child>
-              <img src={heroService2} alt="" className="w-full rounded-2xl shadow-2xl" />
+              <div className="relative" style={{ perspective: "1200px" }}>
+                <img
+                  src={beforeAfterSplit}
+                  alt="Before and after: messy manual accounting vs clean cloud dashboard"
+                  className="w-full rounded-2xl shadow-2xl"
+                  style={{ transform: "rotateY(-8deg)", transformOrigin: "center center" }}
+                />
+              </div>
             </div>
           </div>
           {/* Trust pillars */}
@@ -107,7 +114,7 @@ export default function Index() {
       {/* 5. Dark Impact Stats */}
       <StatsSection />
 
-      {/* 6. Editorial Spread: Our Approach */}
+      {/* 6. Editorial Spread: Our Approach — all white/cream cards with colored borders */}
       <section className="py-20 md:py-28 bg-background" data-reveal>
         <div className="container mx-auto px-4 max-w-5xl">
           <p data-reveal-child className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-4">{lang === "en" ? "Our Approach" : "Notre approche"}</p>
@@ -117,19 +124,19 @@ export default function Index() {
               <div
                 key={i}
                 className={`relative rounded-2xl p-8 md:p-10 transition-transform hover:-translate-y-1 duration-300 ${
-                  i === 0 ? "bg-navy text-primary-foreground" :
-                  i === 1 ? "bg-card border-l-4 border-accent shadow-md" :
-                  i === 2 ? "bg-card shadow-lg" :
+                  i === 0 ? "bg-card border-l-4 border-l-blue-500 shadow-md" :
+                  i === 1 ? "bg-card border-l-4 border-l-accent shadow-md" :
+                  i === 2 ? "bg-card shadow-lg border border-border/40" :
                   "bg-gradient-to-br from-accent/5 to-gold/5 border border-accent/10"
                 }`}
                 data-reveal-child
               >
                 {/* Faded index number */}
-                <span className={`absolute top-4 right-6 font-display text-7xl leading-none pointer-events-none select-none ${i === 0 ? "text-primary-foreground/[0.06]" : "text-foreground/[0.04]"}`}>
+                <span className="absolute top-4 right-6 font-display text-7xl leading-none pointer-events-none select-none text-foreground/[0.04]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className={`font-display text-xl md:text-2xl mb-3 ${i === 0 ? "" : "text-foreground"}`}>{t(block.title, lang)}</h3>
-                <p className={`text-sm leading-relaxed ${i === 0 ? "text-primary-foreground/60" : "text-muted-foreground"}`}>{t(block.desc, lang)}</p>
+                <h3 className="font-display text-xl md:text-2xl mb-3 text-foreground">{t(block.title, lang)}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">{t(block.desc, lang)}</p>
               </div>
             ))}
           </div>
