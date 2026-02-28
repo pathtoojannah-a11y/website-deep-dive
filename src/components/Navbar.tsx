@@ -48,7 +48,7 @@ export default function Navbar() {
         <Link to="/" className="flex items-center gap-2">
           <div className="flex flex-col items-start">
             <img src={logo} alt="Namaca" className="h-9 w-auto" />
-            <span className="text-[9px] font-sans font-medium uppercase tracking-[0.12em] text-muted-foreground -mt-0.5">Cloud-Based Accounting</span>
+            <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.14em] text-foreground/50 -mt-0.5">{lang === "en" ? "Cloud-Based Accounting" : "Comptabilité infonuagique"}</span>
           </div>
         </Link>
 

@@ -33,8 +33,8 @@ export default function Hero({
       <section className="relative bg-navy min-h-[85vh] flex items-end overflow-hidden">
         {heroImage && (
           <>
-            <img src={heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
+            <img src={heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-45" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent" />
           </>
         )}
         <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />

@@ -5,15 +5,27 @@ import Layout from "@/components/Layout";
 import { resourcesPage, posts } from "@/data/resources";
 import { Calendar, ArrowRight } from "lucide-react";
 
-const categories = ["All", "Accounting", "Taxes", "Bookkeeping", "Technology", "Finance", "Advisory", "Operations", "Payroll"];
+const categoriesMap: Record<string, { en: string; fr: string }> = {
+  All: { en: "All", fr: "Tous" },
+  Accounting: { en: "Accounting", fr: "Comptabilité" },
+  Taxes: { en: "Taxes", fr: "Impôts" },
+  Bookkeeping: { en: "Bookkeeping", fr: "Tenue de livres" },
+  Technology: { en: "Technology", fr: "Technologie" },
+  Finance: { en: "Finance", fr: "Finance" },
+  Advisory: { en: "Advisory", fr: "Conseils" },
+  Operations: { en: "Operations", fr: "Opérations" },
+  Payroll: { en: "Payroll", fr: "Paie" },
+};
+
+const categoryKeys = Object.keys(categoriesMap);
 
 export default function Resources() {
   const { lang } = useLanguage();
   const [filter, setFilter] = useState("All");
-  const filtered = filter === "All" ? posts : posts.filter((p) => t(p.category, lang) === filter || t(p.category, lang) === filter);
 
-  const featured = posts[0];
-  const rest = filter === "All" ? posts.slice(1) : filtered;
+  const filtered = filter === "All"
+    ? posts
+    : posts.filter((p) => p.category.en === filter);
 
   return (
     <Layout>
@@ -27,38 +39,25 @@ export default function Resources() {
         </div>
       </section>
 
-      {/* Featured + Grid */}
+      {/* Posts */}
       <section className="py-16 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           {/* Category filters */}
           <div className="flex flex-wrap gap-2 mb-12" data-reveal>
-            {categories.map((cat) => (
+            {categoryKeys.map((key) => (
               <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${filter === cat ? "bg-accent text-accent-foreground" : "bg-muted text-muted-foreground hover:bg-cream-dark"}`}
+                key={key}
+                onClick={() => setFilter(key)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${filter === key ? "bg-accent text-accent-foreground" : "bg-muted text-muted-foreground hover:bg-cream-dark"}`}
               >
-                {cat}
+                {categoriesMap[key][lang]}
               </button>
             ))}
           </div>
 
-          {/* Featured article */}
-          {filter === "All" && (
-            <div className="mb-12 group" data-reveal>
-              <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-navy to-navy-mid h-72 md:h-80 flex items-end p-8 md:p-10">
-                <div className="relative z-10">
-                  <span className="inline-block text-xs font-semibold uppercase tracking-wider text-gold bg-gold/10 px-3 py-1 rounded-full mb-3">{t(featured.category, lang)}</span>
-                  <h2 className="font-display text-2xl md:text-3xl text-primary-foreground mb-2 group-hover:text-gold transition-colors">{t(featured.title, lang)}</h2>
-                  <p className="text-sm text-primary-foreground/60 max-w-xl">{t(featured.excerpt, lang)}</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Posts grid */}
+          {/* Posts grid — consistent layout, no featured jump */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" data-reveal>
-            {rest.map((post) => (
+            {filtered.map((post) => (
               <article key={post.slug} className="bg-card rounded-2xl border border-border/50 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group" data-reveal-child>
                 <div className="h-44 bg-gradient-to-br from-navy/80 to-navy-mid flex items-center justify-center">
                   <span className="text-xs font-semibold text-primary-foreground/50 bg-primary-foreground/10 px-3 py-1 rounded-full uppercase tracking-wider">
