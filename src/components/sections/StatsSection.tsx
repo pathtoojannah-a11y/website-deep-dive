@@ -43,7 +43,7 @@ export default function StatsSection({ stats, title }: { stats?: StatItem[]; tit
   const heading = title || { en: "By the Numbers", fr: "En chiffres" };
 
   return (
-    <section className="relative bg-navy text-primary-foreground py-20 md:py-28 overflow-hidden">
+    <section className="relative bg-navy text-primary-foreground py-24 md:py-32 lg:py-40 section-dark-depth">
       {/* Radial glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[150px] pointer-events-none" />
       <div className="container mx-auto px-4 relative z-10" data-reveal>

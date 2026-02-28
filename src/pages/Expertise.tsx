@@ -12,7 +12,7 @@ import industryHealthcare from "@/assets/industry-healthcare.jpg";
 import industryEcommerce from "@/assets/industry-ecommerce.jpg";
 import heroService1 from "@/assets/hero-service-1.jpg";
 import heroService2 from "@/assets/hero-service-2.jpg";
-import { Stethoscope, Building2, ShoppingCart, Briefcase, ChevronDown } from "lucide-react";
+import { Stethoscope, Building2, ShoppingCart, Briefcase, ChevronDown, CheckCircle } from "lucide-react";
 
 type T = Record<Lang, string>;
 
@@ -37,13 +37,42 @@ export default function Expertise() {
   return (
     <Layout>
       <Hero
-        variant="cinematic"
+        variant="split"
+        layoutTone="light"
         eyebrow={lang === "en" ? "Industry Expertise" : "Expertise sectorielle"}
         title={lang === "en" ? "Deep expertise across the industries that matter." : "Une expertise approfondie dans les secteurs qui comptent."}
         subtitle={lang === "en" ? "We bring specialized financial knowledge to your industry, combining sector-specific insights with modern cloud technology." : "Nous apportons une connaissance financière spécialisée à votre secteur, combinant des perspectives sectorielles avec la technologie infonuagique."}
-        ctaText={lang === "en" ? "Book a Consultation" : "Réserver une consultation"}
+        ctaText={lang === "en" ? "Let's talk" : "Parlons-en"}
         ctaLink="/expertise#contact"
-        heroImage={heroExpertise}
+        mediaSlot={
+          <div className="rounded-2xl border border-border/60 bg-card shadow-xl p-6 space-y-4 max-w-sm mx-auto">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-3 h-3 rounded-full bg-rose-400" />
+              <div className="w-3 h-3 rounded-full bg-amber-400" />
+              <div className="w-3 h-3 rounded-full bg-emerald-400" />
+              <span className="ml-auto text-[10px] text-muted-foreground font-mono">namaca.ca</span>
+            </div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+              {lang === "en" ? "Our Capabilities" : "Nos capacites"}
+            </div>
+            {[
+              { en: "Financial Analysis & Modeling", fr: "Analyse et modelisation financiere" },
+              { en: "Seamless Team Integration", fr: "Integration d'equipe fluide" },
+              { en: "Compliance & Reporting", fr: "Conformite et rapports" },
+              { en: "Process Optimization", fr: "Optimisation des processus" },
+              { en: "Cloud-First Operations", fr: "Operations infonuagiques" },
+              { en: "Multi-Industry Expertise", fr: "Expertise multi-sectorielle" },
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-3 py-2 border-b border-border/30 last:border-0">
+                <CheckCircle size={16} className="text-emerald-500 shrink-0" />
+                <span className="text-sm text-foreground">{lang === "en" ? item.en : item.fr}</span>
+              </div>
+            ))}
+            <div className="text-xs text-emerald-600 font-medium pt-1">
+              {lang === "en" ? "All capabilities active" : "Toutes les capacites actives"}
+            </div>
+          </div>
+        }
       />
 
       {/* Industry Verticals — Alternating split-media with unique images */}

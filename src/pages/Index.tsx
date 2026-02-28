@@ -1,7 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { t, serviceLinks, Lang } from "@/i18n/translations";
+import { t, Lang } from "@/i18n/translations";
 import Layout from "@/components/Layout";
 import Hero from "@/components/sections/Hero";
 import PartnersBar from "@/components/sections/PartnersBar";
@@ -10,25 +8,27 @@ import StatsSection from "@/components/sections/StatsSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import CTASection from "@/components/sections/CTASection";
+import IconBenefitStrip from "@/components/sections/IconBenefitStrip";
+import InlineTestimonial from "@/components/sections/InlineTestimonial";
+import HeroActivityCard from "@/components/sections/HeroActivityCard";
 import heroHome from "@/assets/hero-home.jpg";
 import beforeAfterSplit from "@/assets/before-after-split.png";
-import { CheckCircle, Cloud, BarChart3, Rocket, Monitor, Users, Shield, Zap } from "lucide-react";
+import { Cloud, BarChart3, Monitor, ShieldCheck, Workflow, Clock } from "lucide-react";
 
 type T = Record<Lang, string>;
 
-/* Editorial "Our Approach" blocks — each styled uniquely */
 const approach: { title: T; desc: T }[] = [
-  { title: { en: "Clean Desk Policy", fr: "Bureau propre" }, desc: { en: "All financial documents organized in the cloud. No more lost receipts or missing invoices. Your books stay pristine.", fr: "Tous vos documents financiers organisés dans le nuage. Plus de reçus perdus ni de factures manquantes." } },
-  { title: { en: "Cloud-First Access", fr: "Accès infonuagique" }, desc: { en: "Access your financials from anywhere, any device. Bank-level security. Real-time team collaboration.", fr: "Accédez à vos finances de partout, depuis n'importe quel appareil. Sécurité bancaire. Collaboration en temps réel." } },
-  { title: { en: "Gain Clarity", fr: "Gagner en clarté" }, desc: { en: "Custom dashboards for your KPIs. Monthly reports with actionable insights. Cash flow visibility at a glance.", fr: "Tableaux de bord personnalisés pour vos KPI. Rapports mensuels avec recommandations concrètes." } },
-  { title: { en: "Beyond Bookkeeping", fr: "Au-delà de la comptabilité" }, desc: { en: "Strategic financial advisory, fractional CFO services, tax planning, and industry-specific expertise.", fr: "Conseil financier stratégique, services de directeur financier, planification fiscale et expertise sectorielle." } },
+  { title: { en: "Clean Desk Policy", fr: "Bureau propre" }, desc: { en: "All financial documents organized in the cloud. No more lost receipts or missing invoices. Your books stay pristine.", fr: "Tous vos documents financiers sont organises dans le cloud. Plus de recus perdus ni de factures manquantes." } },
+  { title: { en: "Cloud-First Access", fr: "Acces infonuagique" }, desc: { en: "Access your financials from anywhere, any device. Bank-level security and real-time collaboration.", fr: "Accedez a vos finances de partout, sur tout appareil. Securite de niveau bancaire et collaboration en temps reel." } },
+  { title: { en: "Gain Clarity", fr: "Gagner en clarte" }, desc: { en: "Custom dashboards for KPIs, monthly reporting, and visibility on cash flow.", fr: "Tableaux de bord KPI personnalises, rapports mensuels, et visibilite sur la tresorerie." } },
+  { title: { en: "Beyond Bookkeeping", fr: "Au-dela de la comptabilite" }, desc: { en: "Strategic advisory, fractional CFO support, tax planning, and industry-specific expertise.", fr: "Conseil strategique, support CFO fractionnel, planification fiscale, et expertise sectorielle." } },
 ];
 
 const homeFAQ: { q: T; a: T }[] = [
-  { q: { en: "What industries do you serve?", fr: "Quels secteurs desservez-vous?" }, a: { en: "We specialize in tech startups, e-commerce, professional services, and contractors across Canada.", fr: "Nous nous spécialisons dans les startups technologiques, le commerce en ligne, les services professionnels et les entrepreneurs au Canada." } },
-  { q: { en: "How is Namaca different from traditional accounting firms?", fr: "En quoi Namaca diffère-t-il des cabinets comptables traditionnels?" }, a: { en: "We're 100% cloud-based, leveraging modern tools like Xero, Dext, and Gusto to deliver faster, more accurate, and more accessible accounting.", fr: "Nous sommes 100% infonuagiques, utilisant des outils modernes comme Xero, Dext et Gusto pour offrir une comptabilité plus rapide et plus précise." } },
-  { q: { en: "Do you work with businesses outside Montréal?", fr: "Travaillez-vous avec des entreprises hors de Montréal?" }, a: { en: "Absolutely! Being fully cloud-based, we work with clients across Canada and internationally.", fr: "Absolument! Étant entièrement infonuagiques, nous travaillons avec des clients partout au Canada et à l'international." } },
-  { q: { en: "How do I get started?", fr: "Comment commencer?" }, a: { en: "Simply book a free consultation call. We'll discuss your needs and create a customized plan.", fr: "Réservez simplement un appel de consultation gratuit. Nous discuterons de vos besoins et créerons un plan personnalisé." } },
+  { q: { en: "What industries do you serve?", fr: "Quels secteurs desservez-vous?" }, a: { en: "We support tech startups, ecommerce, professional services, and contractors across Canada.", fr: "Nous accompagnons les startups tech, le ecommerce, les services professionnels, et les entrepreneurs partout au Canada." } },
+  { q: { en: "How is Namaca different from traditional firms?", fr: "Qu'est-ce qui differencie Namaca?" }, a: { en: "We are cloud-first and process-driven, using modern tools for faster and more reliable delivery.", fr: "Nous sommes cloud-first et pilotes par processus, avec des outils modernes pour une livraison plus rapide et fiable." } },
+  { q: { en: "Do you work outside Montreal?", fr: "Travaillez-vous hors Montreal?" }, a: { en: "Yes. We work remotely with clients across Canada and internationally.", fr: "Oui. Nous travaillons a distance avec des clients au Canada et a l'international." } },
+  { q: { en: "How do we get started?", fr: "Comment commencer?" }, a: { en: "Book a consultation call and we will design a tailored accounting operations plan.", fr: "Reservez une consultation et nous construirons un plan adapte a vos operations comptables." } },
 ];
 
 export default function Index() {
@@ -36,65 +36,56 @@ export default function Index() {
 
   return (
     <Layout>
-      {/* 1. Cinematic Hero */}
       <Hero
         variant="cinematic"
-        eyebrow={lang === "en" ? "100% Cloud-Based Accounting" : "Comptabilité 100% infonuagique"}
-        title={lang === "en" ? "Your finances, handled. So you can focus on growth." : "Vos finances, prises en charge. Pour que vous puissiez grandir."}
-        subtitle={lang === "en" ? "We combine a dedicated team, modern techniques, and the latest technology to deliver accounting solutions that help Canadian businesses thrive." : "Nous combinons une équipe dédiée, des techniques modernes et les dernières technologies pour offrir des solutions comptables qui aident les entreprises canadiennes à prospérer."}
-        ctaText={lang === "en" ? "Book a Free Consultation" : "Réserver une consultation gratuite"}
-        ghostCtaText={lang === "en" ? "Explore Services" : "Découvrir nos services"}
-        ghostCtaLink="/#services"
-        heroImage={heroHome}
+        title={lang === "en" ? "Your finances, handled." : "Vos finances, gerees."}
+        subtitle={lang === "en" ? "From bookkeeping to CFO advisory, we keep your books clean, your payroll on time, and your numbers ready — so you never have to worry about it again." : "De la tenue de livres au conseil CFO, nous gardons vos livres propres, votre paie a temps et vos chiffres prets — pour que vous n'ayez plus jamais a vous en soucier."}
+        ctaText={lang === "en" ? "Fix your books" : "Reparons vos livres"}
+        ghostCtaText={lang === "en" ? "Explore Services" : "Decouvrir nos services"}
+        ghostCtaLink="/services"
+        mediaSlot={<HeroActivityCard lang={lang} />}
       >
-        {/* Trust strip — clean editorial, no icons */}
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-primary-foreground/50 text-sm font-sans font-medium tracking-wide">
-          <span>{lang === "en" ? "200+ businesses served" : "200+ entreprises desservies"}</span>
-          <span className="text-primary-foreground/20">·</span>
-          <span>{lang === "en" ? "CPA-level expertise" : "Expertise de niveau CPA"}</span>
-          <span className="text-primary-foreground/20">·</span>
-          <span>{lang === "en" ? "15+ years experience" : "15+ ans d'expérience"}</span>
+          <span>{lang === "en" ? "200+ businesses served" : "200+ entreprises accompagnees"}</span>
+          <span className="text-primary-foreground/20">.</span>
+          <span>{lang === "en" ? "CPA-level expertise" : "Expertise niveau CPA"}</span>
+          <span className="text-primary-foreground/20">.</span>
+          <span>{lang === "en" ? "15+ years experience" : "15+ ans d'experience"}</span>
         </div>
       </Hero>
 
-      {/* 2. Partner Logo Strip */}
       <PartnersBar />
 
-      {/* 3. Service Showcase — Horizontal list */}
-      <div id="services">
-        <ServiceShowcase />
-      </div>
+      <ServiceShowcase />
 
-      {/* 4. Split Media: Why Namaca — using before/after split image */}
-      <section className="py-20 md:py-28 bg-cream" data-reveal>
+      <section className="py-24 md:py-32 lg:py-40 bg-background" data-reveal>
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div data-reveal-child>
               <p className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-6">{lang === "en" ? "Why Namaca" : "Pourquoi Namaca"}</p>
               <h2 className="font-display text-3xl md:text-4xl text-foreground leading-[1.15] mb-6">
-                {lang === "en" ? "We don't just do your books. We give you clarity, confidence, and control." : "Nous ne faisons pas que vos livres. Nous vous donnons clarté, confiance et contrôle."}
+                {lang === "en" ? "We do more than bookkeeping. We deliver clarity and control." : "Nous faisons plus que la comptabilite. Nous apportons clarte et controle."}
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                {lang === "en" ? "Most accounting firms hand you numbers. We hand you insights. Our cloud-first approach means real-time access, automated workflows, and strategic guidance that actually moves the needle." : "La plupart des cabinets vous donnent des chiffres. Nous vous donnons des perspectives. Notre approche infonuagique signifie un accès en temps réel, des flux de travail automatisés et des conseils stratégiques qui font vraiment la différence."}
+                {lang === "en" ? "Most firms hand over numbers. We deliver operating insight. Real-time access, automated workflows, and practical guidance that improves decisions." : "La plupart des cabinets livrent des chiffres. Nous livrons de l'insight operationnel. Acces temps reel, automatisation, et conseils actionnables."}
               </p>
             </div>
             <div className="hidden lg:block" data-reveal-child>
               <div className="relative" style={{ perspective: "1200px" }}>
                 <img
                   src={beforeAfterSplit}
-                  alt="Before and after: messy manual accounting vs clean cloud dashboard"
+                  alt="Before and after accounting operations"
                   className="w-full rounded-2xl shadow-2xl"
                   style={{ transform: "rotateY(-8deg)", transformOrigin: "center center" }}
                 />
               </div>
             </div>
           </div>
-          {/* Trust pillars */}
           <div className="grid sm:grid-cols-3 gap-8 mt-16" data-reveal-child>
             {[
-              { icon: Monitor, stat: "100%", label: { en: "Cloud-Based Operations", fr: "Opérations infonuagiques" } },
-              { icon: BarChart3, stat: "24h", label: { en: "Response Time", fr: "Temps de réponse" } },
-              { icon: Cloud, stat: "Real-time", label: { en: "Financial Visibility", fr: "Visibilité financière" } },
+              { icon: Monitor, stat: "100%", label: { en: "Cloud-Based Operations", fr: "Operations infonuagiques" } },
+              { icon: BarChart3, stat: "24h", label: { en: "Response Time", fr: "Temps de reponse" } },
+              { icon: Cloud, stat: "Real-time", label: { en: "Financial Visibility", fr: "Visibilite financiere" } },
             ].map((p, i) => {
               const Icon = p.icon;
               return (
@@ -111,14 +102,18 @@ export default function Index() {
         </div>
       </section>
 
-      {/* 5. Dark Impact Stats */}
+      <InlineTestimonial
+        quote={lang === "en" ? "Namaca gave us the financial clarity to move faster without increasing risk." : "Namaca nous a donne la clarte financiere pour aller plus vite sans augmenter le risque."}
+        author="Alexandre Dupuis"
+        role={lang === "en" ? "CEO, Multi-Location Operator" : "CEO, operateur multi-sites"}
+      />
+
       <StatsSection />
 
-      {/* 6. Editorial Spread: Our Approach — all white/cream cards with colored borders */}
-      <section className="py-20 md:py-28 bg-background" data-reveal>
+      <section className="py-24 md:py-32 lg:py-40 bg-cream" data-reveal>
         <div className="container mx-auto px-4 max-w-5xl">
           <p data-reveal-child className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-4">{lang === "en" ? "Our Approach" : "Notre approche"}</p>
-          <h2 data-reveal-child className="font-display text-3xl md:text-4xl text-foreground mb-14 max-w-lg">{lang === "en" ? "How we transform your back office" : "Comment nous transformons votre comptabilité"}</h2>
+          <h2 data-reveal-child className="font-display text-3xl md:text-4xl text-foreground mb-14 max-w-lg">{lang === "en" ? "How we transform your back office" : "Comment nous transformons votre comptabilite"}</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {approach.map((block, i) => (
               <div
@@ -131,7 +126,6 @@ export default function Index() {
                 }`}
                 data-reveal-child
               >
-                {/* Faded index number */}
                 <span className="absolute top-4 right-6 font-display text-7xl leading-none pointer-events-none select-none text-foreground/[0.04]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
@@ -143,13 +137,8 @@ export default function Index() {
         </div>
       </section>
 
-      {/* 7. Pull-Quote Testimonial */}
       <TestimonialsSection />
-
-      {/* 8. FAQ */}
       <FAQSection items={homeFAQ} />
-
-      {/* 9. CTA Strip */}
       <CTASection />
     </Layout>
   );

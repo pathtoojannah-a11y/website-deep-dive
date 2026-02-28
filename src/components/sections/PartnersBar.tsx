@@ -14,13 +14,23 @@ export default function PartnersBar() {
   const { lang } = useLanguage();
   const title: T = { en: "Powered by best-in-class tools", fr: "Propulsé par les meilleurs outils" };
 
+  // Double the logos for seamless marquee loop
+  const doubledPartners = [...partners, ...partners];
+
   return (
-    <section className="py-14 bg-background border-y border-border/50" data-reveal>
+    <section className="py-10 md:py-12 bg-background border-y border-border/30 overflow-hidden" data-reveal>
       <div className="container mx-auto px-4">
-        <p data-reveal-child className="text-center font-sans text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground mb-8">{t(title, lang)}</p>
-        <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16">
-          {partners.map((p) => (
-            <img key={p.name} src={p.logo} alt={p.name} className="h-7 md:h-9 object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300" data-reveal-child />
+        <p data-reveal-child className="text-center font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/60 mb-8">{t(title, lang)}</p>
+      </div>
+      <div className="relative">
+        <div className="flex items-center gap-16 md:gap-24 marquee-track w-max">
+          {doubledPartners.map((p, i) => (
+            <img
+              key={`${p.name}-${i}`}
+              src={p.logo}
+              alt={p.name}
+              className="h-6 md:h-8 object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+            />
           ))}
         </div>
       </div>

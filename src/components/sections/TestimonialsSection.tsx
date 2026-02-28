@@ -19,7 +19,7 @@ export default function TestimonialsSection({ items }: { items?: Testimonial[] }
   const item = testimonials[0];
 
   return (
-    <section className="py-20 md:py-28 bg-cream relative overflow-hidden" data-reveal>
+    <section className="py-24 md:py-32 lg:py-40 bg-cream relative overflow-hidden" data-reveal>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center relative">
           {/* Decorative quote mark */}

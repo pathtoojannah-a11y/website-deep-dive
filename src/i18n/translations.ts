@@ -36,7 +36,7 @@ export const footer = {
 export const cta = {
   title: { en: "Ready to take control of your finances?", fr: "Prêt à prendre le contrôle de vos finances?" } as T,
   subtitle: { en: "Book a free consultation and discover how Namaca can transform your accounting operations.", fr: "Réservez une consultation gratuite et découvrez comment Namaca peut transformer vos opérations comptables." } as T,
-  button: { en: "Book a Free Consultation", fr: "Réserver une consultation gratuite" } as T,
+  button: { en: "Let's talk", fr: "Parlons-en" } as T,
 };
 
 export const contactForm = {

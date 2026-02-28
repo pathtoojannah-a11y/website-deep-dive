@@ -1,12 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
-
 @layer base {
   :root {
-    --background: 40 33% 98%;
+    --background: 220 14% 98%;
     --foreground: 222 40% 8%;
 
     --card: 0 0% 100%;
@@ -21,7 +21,7 @@
     --secondary: 214 33% 17%;
     --secondary-foreground: 40 33% 98%;
 
-    --muted: 46 100% 96%;
+    --muted: 220 14% 96%;
     --muted-foreground: 218 20% 46%;
 
     --accent: 30 100% 46%;
@@ -42,8 +42,8 @@
     --orange: 30 100% 46%;
     --orange-light: 30 100% 52%;
     --orange-dark: 30 100% 38%;
-    --cream: 46 100% 96%;
-    --cream-dark: 46 40% 90%;
+    --cream: 220 14% 96%;
+    --cream-dark: 220 10% 92%;
     --gold: 42 78% 52%;
 
     --sidebar-background: 0 0% 98%;
@@ -98,6 +98,11 @@
   h1, h2, h3, h4 {
     font-family: 'DM Serif Display', serif;
     font-weight: 400;
+    letter-spacing: -0.025em;
+  }
+
+  h1 {
+    letter-spacing: -0.035em;
   }
 }
 
@@ -110,9 +115,10 @@
 /* Scroll reveal system */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
 }
 
 [data-reveal].revealed {
@@ -141,6 +147,91 @@
   }
 }
 
+/* Gradient mesh hero background */
+.hero-gradient-mesh {
+  background: hsl(222 40% 8%);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(59,130,246,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(168,85,247,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(207,126,46,0.06) 0%, transparent 50%);
+}
+
+.hero-gradient-mesh::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Dark section with depth */
+.section-dark-depth {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-dark-depth::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+.section-dark-depth::after {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(207,126,46,0.06), transparent 70%);
+  border-radius: 50%;
+  filter: blur(100px);
+  top: -200px;
+  right: -200px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Spotlight hover effect for service grids */
+.spotlight-grid:hover .spotlight-card {
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.spotlight-grid:hover .spotlight-card:hover {
+  opacity: 1;
+}
+
+/* Logo marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Hero activity card scale-in */
+@keyframes scaleIn {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] {
     opacity: 1;
@@ -153,3 +244,4 @@
     animation: none;
   }
 }
+

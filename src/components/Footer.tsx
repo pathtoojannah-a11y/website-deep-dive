@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { nav, serviceLinks, footer as f, t } from "@/i18n/translations";
+import { nav, footer as f, t } from "@/i18n/translations";
+import { serviceCatalog } from "@/data/serviceCatalog";
 import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import logo from "@/assets/logo.svg";
 
@@ -40,9 +41,9 @@ export default function Footer() {
           <div>
             <h4 className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-gold mb-5">{t(f.servicesTitle, lang)}</h4>
             <div className="space-y-3">
-              {serviceLinks.map((s) => (
+              {serviceCatalog.map((s) => (
                 <Link key={s.slug} to={`/${s.slug}`} className="block text-sm text-primary-foreground/50 hover:text-gold transition-colors">
-                  {t(s.label, lang)}
+                  {t(s.navLabel, lang)}
                 </Link>
               ))}
             </div>
