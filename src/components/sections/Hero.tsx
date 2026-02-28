@@ -57,7 +57,7 @@ export default function Hero({
                 </Button>
               )}
               {ghostCtaText && ghostCtaLink && (
-                <Button asChild variant="outline" className="rounded-full px-8 py-6 text-base font-medium border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/5 hover:-translate-y-0.5 transition-all" size="lg">
+                <Button asChild variant="outline" className="rounded-full px-8 py-6 text-base font-medium border border-white/40 text-primary-foreground hover:bg-primary-foreground/10 hover:-translate-y-0.5 transition-all" size="lg">
                   <Link to={ghostCtaLink}>{ghostCtaText}</Link>
                 </Button>
               )}
