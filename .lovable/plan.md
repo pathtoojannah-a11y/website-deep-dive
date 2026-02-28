@@ -1,95 +1,79 @@
 
 
-# Fix Pass — Research-Informed Service Page Differentiation + Visual Polish
+# Visual & Image Overhaul — Based on 12 B2B Sites Analyzed
 
-## Research Findings
+## Core Finding
 
-From analyzing 20+ top B2B and professional services websites, here are the key patterns that differentiate service pages:
+After scanning Ramp, Bench, Gusto, Pilot, Stripe, Mercury, Brex, Rippling, BILL, Xero, FreshBooks, and Wave — none use generic stock photography. They all use one of three visual strategies:
 
-**1. Each service page should feel like its own mini-landing page** — not a template with swapped text. The best sites (HITT, Toll Brothers, Painter Bros) use completely different section ordering, visual treatments, and content density per service.
+1. **Product UI mockups** (Ramp, Gusto, FreshBooks, BILL, Wave) — screenshots of their actual dashboard/interface
+2. **Real people + product overlays** (Bench, Pilot, Rippling) — real team member with floating UI elements
+3. **Custom illustration or abstract art** (Stripe, Xero, Mercury) — artistic, brand-specific visuals
 
-**2. Lead with pain/outcome, not the service name** — "Drowning in receipts?" converts better than "Bookkeeping Services". Already doing this partially.
+Namaca currently uses AI-generated stock photos behind dark overlays on every page. This is the single biggest tell that it's a template site.
 
-**3. Social proof AT the decision point** — stats, testimonials, and client logos placed mid-page near CTAs, not isolated in their own section. Best sites weave proof INTO the content.
+## What Changes
 
-**4. Process transparency builds trust** — step-by-step breakdowns with clear deliverables. Vertical timelines with scroll animation work best (WyattWorks, Millhouse).
+### 1. Replace hero background images with CSS-built "product mockup" visuals
 
-**5. Cross-link related services** — "Clients who use Bookkeeping also benefit from our Fractional CFO services." This increases page views and mirrors how clients think.
+Since Namaca doesn't have a real product to screenshot, we build stylized dashboard/UI mockup components in React+CSS that represent each service's output. These replace the stock photos entirely.
 
-**6. Vary content density** — some services need deep explanation (CFO, Consulting), others need quick clarity (Payroll, AP). Page length should match complexity.
+- **Home hero**: Keep cinematic bg photo (it works for the home page like Mercury does) but add a floating dashboard card element on the right side showing sample metrics (like Ramp's hero)
+- **Bookkeeping**: Light bg split hero (like Gusto payroll) — text left, a CSS-built "Xero dashboard" mockup card on the right showing sample transactions/reconciliation
+- **Payroll**: Centered hero on cream bg (like Ramp bill-pay) — text centered, below it a CSS mockup showing a payroll summary card
+- **Taxes**: Keep cinematic dark hero (gravitas) but overlay a floating "Tax Filing Progress" card UI element
+- **CFO**: Keep cinematic dark hero, add a floating "Financial Overview" dashboard card
+- **AP/AR**: Light bg split, with CSS invoice/payment flow mockup cards
+- **Consulting**: Editorial hero (large text, no image — like Stripe's approach)
 
-**7. Avoid identical section ordering** — the #1 giveaway of template sites. Reorder: some pages lead with process, others with stats, others with comparison tables.
+### 2. Build reusable `DashboardMockup` component
 
----
+A new component that renders a stylized card resembling a SaaS dashboard. Content varies per service:
+- Bookkeeping: transaction list + reconciliation status
+- Payroll: payroll summary with employee count + next run date
+- Taxes: filing progress bar + deadline
+- CFO: revenue chart + KPI cards
+- AP: bill queue with approval status
+- AR: invoice aging summary
 
-## Implementation Plan
+Built with Tailwind — rounded cards, subtle shadows, small text, accent-colored status indicators. Positioned with CSS transforms (slight rotation, floating effect) like Ramp/Bench.
 
-### 1. Lighten Hero Overlays
-**File:** `Hero.tsx`
-- Change image `opacity-30` to `opacity-45`
-- Lighten gradient from `via-navy/60` to `via-navy/40`
+### 3. Add `IconBenefitStrip` component (like Gusto payroll)
 
-### 2. Fix Navbar Subtitle Visibility
-**File:** `Navbar.tsx`
-- Already has "Cloud-Based Accounting" subtitle — increase size from `text-[9px]` to `text-[10px]`, make it more visible on both transparent and scrolled states
+Horizontal row of 4-5 icons with short labels on a colored background strip, placed right after the hero on select pages. Visible in the Gusto payroll screenshot.
 
-### 3. Regenerate 4 Images
-- E-commerce: online storefront, shipping boxes, product shelves (NOT RFID/inventory accounting)
-- Professional Services: woman in modern office setting (user liked this)
-- Payroll: team/employees, paychecks, HR-related
-- Fractional CFO: clean, professional executive setting
+### 4. Add `InlineTestimonial` component (like Bench/Pilot)
 
-### 4. Fix Service Page Stats Section
-**File:** `ServicePage.tsx`
-- Change from `bg-navy text-gold` to `bg-cream` with `text-navy` values and `text-accent` labels
-- Better centered, cleaner look
+A single pull-quote placed between feature sections. Large quote marks, customer name, company name. Not a full testimonial carousel — just one impactful quote.
 
-### 5. Remove Duplicate Before/After Image
-**File:** `ServicePage.tsx`
-- Remove the bookkeeping "From chaos to clarity" section (lines 318-334) — same image already on home page
+### 5. Vary hero styles per service page
 
-### 6. Fix Big Gaps (Payroll Split-Media)
-**File:** `ServicePage.tsx`
-- The `h-48` colored placeholder divs in payroll layout (idx===1, line 217) create dead space. Replace with actual content — use the service accent icon grid or remove the empty box entirely.
+Using the existing `Hero.tsx` component, add a `"centered"` variant (light bg, centered text, visual below — like Ramp bill-pay). Assign:
+- Bookkeeping, AP, AR: `split` variant on light bg
+- Payroll: `centered` variant on cream bg
+- Taxes, CFO: `cinematic` (dark) with floating UI card
+- Consulting: `cinematic` editorial (no image, just large text)
 
-### 7. Convert Bookkeeping Process to Vertical
-**File:** `ServicePage.tsx`
-- Change horizontal timeline (idx===0) to vertical like other services for consistency and better scroll animation
+### 6. Fix section background alternation
 
-### 8. Make Service Pages More Distinct (Section Reordering)
-**File:** `ServicePage.tsx`
-- **Bookkeeping** (idx 0): Hero → Pain → Benefits → Process → Cross-link (Payroll) → Testimonial → FAQ → Contact → CTA
-- **Payroll** (idx 1): Hero → Stats → Pain → Benefits → Process → Cross-link (Bookkeeping) → Testimonial → FAQ → CTA
-- **Taxes** (idx 2): Hero → Pain → Benefits → Stats → Process → FAQ → Contact → CTA
-- **Fractional CFO** (idx 3): Hero → Comparison → Pain → Benefits → Process → Stats → Testimonial → CTA
-- **AP** (idx 4): Hero → Pain → Flow Diagram Process → Benefits → Stats → Cross-link (AR) → FAQ → CTA
-- **AR** (idx 5): Hero → Pain → Benefits → Stats → Process → Cross-link (AP) → FAQ → CTA
-- **Consulting** (idx 6): Hero → Pain → Editorial Benefits → Process → Stats → Testimonial → Contact → CTA
-
-Add a "Related Services" cross-link component between sections for each service.
-
-### 9. Translate All Resources to French
-**File:** `src/data/resources.ts`
-- All 18 posts currently have identical EN text in the FR fields. Translate all titles and excerpts to proper French.
-
-### 10. Fix Resources Category Filter for FR
-**File:** `Resources.tsx`
-- Category buttons are hardcoded English ("All", "Accounting", etc.)
-- When in FR mode, categories should show French equivalents
-- Filter logic should match against the current language's category value
-
-### 11. Fix Resources Layout Jump
-**File:** `Resources.tsx`
-- When switching from "All" to a category, the featured article disappears causing content jump. Use consistent grid layout regardless of filter state.
+Enforce strict alternation: white -> cream -> white -> navy -> white. No two adjacent sections should share the same background color.
 
 ---
 
-## Files Changed
-- `Hero.tsx` — lighter overlays
-- `Navbar.tsx` — subtitle visibility
-- `ServicePage.tsx` — stats redesign, remove duplicate image, fix gaps, vertical process, section reordering, cross-links
-- `Expertise.tsx` — new industry images
-- `resources.ts` — full FR translations
-- `Resources.tsx` — fix category filter + layout
-- 4 new AI-generated images
+## Files to Create
+- `src/components/sections/DashboardMockup.tsx` — CSS-built product UI cards per service
+- `src/components/sections/IconBenefitStrip.tsx` — horizontal icon + label strip
+- `src/components/sections/InlineTestimonial.tsx` — mid-page pull-quote
+
+## Files to Modify
+- `src/components/sections/Hero.tsx` — add `centered` variant, support dashboard mockup as child
+- `src/pages/ServicePage.tsx` — integrate new components, vary hero types, fix bg alternation
+- `src/pages/Index.tsx` — add floating dashboard mockup to home hero
+
+## Technical Details
+- Dashboard mockup cards use pure Tailwind CSS (rounded-2xl, shadow-xl, bg-white, small text)
+- Positioned with `transform: rotate(-3deg)` and `translateY` for floating effect
+- Each service gets a unique mockup showing relevant data (transactions, payroll, invoices)
+- No new images needed — everything is CSS/React components
+- Icon benefit strip uses lucide-react icons already installed
 
