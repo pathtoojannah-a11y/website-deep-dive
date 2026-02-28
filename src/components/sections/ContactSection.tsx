@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { contactForm as cf, t } from "@/i18n/translations";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { contactForm as cf, t, footer as f } from "@/i18n/translations";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Mail, Send, CheckCircle } from "lucide-react";
-import { footer as f } from "@/i18n/translations";
 
 export default function ContactSection() {
   const { lang } = useLanguage();
@@ -18,49 +15,66 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section id="contact" className="py-20 md:py-28 bg-background" data-reveal>
       <div className="container mx-auto px-4">
         <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-display">{t(cf.title, lang)}</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{t(cf.subtitle, lang)}</p>
+          <p data-reveal-child className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-4">
+            {lang === "en" ? "Get in Touch" : "Nous contacter"}
+          </p>
+          <h2 data-reveal-child className="font-display text-3xl md:text-4xl text-foreground mb-4">{t(cf.title, lang)}</h2>
+          <p data-reveal-child className="text-muted-foreground text-lg max-w-xl mx-auto">{t(cf.subtitle, lang)}</p>
         </div>
         <div className="grid lg:grid-cols-5 gap-12 max-w-5xl mx-auto">
-          <form onSubmit={handleSubmit} className="lg:col-span-3 space-y-5">
-            <div className="grid sm:grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="lg:col-span-3 space-y-6 bg-cream rounded-2xl p-8 md:p-10" data-reveal-child>
+            <div className="grid sm:grid-cols-2 gap-5">
               <div>
-                <label className="text-sm font-medium text-foreground mb-1.5 block">{t(cf.firstName, lang)}</label>
-                <Input placeholder={t(cf.firstName, lang)} className="rounded-xl" required />
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">{t(cf.firstName, lang)}</label>
+                <input placeholder={t(cf.firstName, lang)} className="w-full bg-transparent border-0 border-b-2 border-border focus:border-accent outline-none py-3 text-foreground placeholder:text-muted-foreground/50 transition-colors" required />
               </div>
               <div>
-                <label className="text-sm font-medium text-foreground mb-1.5 block">{t(cf.lastName, lang)}</label>
-                <Input placeholder={t(cf.lastName, lang)} className="rounded-xl" required />
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">{t(cf.lastName, lang)}</label>
+                <input placeholder={t(cf.lastName, lang)} className="w-full bg-transparent border-0 border-b-2 border-border focus:border-accent outline-none py-3 text-foreground placeholder:text-muted-foreground/50 transition-colors" required />
               </div>
             </div>
             <div>
-              <label className="text-sm font-medium text-foreground mb-1.5 block">{t(cf.email, lang)}</label>
-              <Input type="email" placeholder={t(cf.email, lang)} className="rounded-xl" required />
+              <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">{t(cf.email, lang)}</label>
+              <input type="email" placeholder={t(cf.email, lang)} className="w-full bg-transparent border-0 border-b-2 border-border focus:border-accent outline-none py-3 text-foreground placeholder:text-muted-foreground/50 transition-colors" required />
             </div>
             <div>
-              <label className="text-sm font-medium text-foreground mb-1.5 block">{t(cf.phone, lang)}</label>
-              <Input type="tel" placeholder={t(cf.phone, lang)} className="rounded-xl" />
+              <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">{t(cf.message, lang)}</label>
+              <textarea placeholder={lang === "en" ? "Tell us about your business..." : "Parlez-nous de votre entreprise..."} rows={4} className="w-full bg-transparent border-0 border-b-2 border-border focus:border-accent outline-none py-3 text-foreground placeholder:text-muted-foreground/50 transition-colors resize-none" required />
             </div>
-            <div>
-              <label className="text-sm font-medium text-foreground mb-1.5 block">{t(cf.message, lang)}</label>
-              <Textarea placeholder={t(cf.message, lang)} rows={4} className="rounded-xl" required />
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <Button type="submit" className="bg-accent hover:bg-orange-dark text-accent-foreground rounded-full px-10 py-6 text-base font-semibold hover:-translate-y-0.5 transition-all shadow-lg shadow-accent/20" size="lg" disabled={submitted}>
+                {submitted ? (
+                  <><CheckCircle size={18} className="mr-2" />{t(cf.success, lang)}</>
+                ) : (
+                  <><Send size={18} className="mr-2" />{t(cf.submit, lang)}</>
+                )}
+              </Button>
+              <span className="text-xs text-muted-foreground">{lang === "en" ? "We respond within 24 hours." : "Nous répondons dans les 24 heures."}</span>
             </div>
-            <Button type="submit" className="bg-orange hover:bg-orange-dark text-accent-foreground rounded-full px-8 py-6 text-base font-medium w-full sm:w-auto" size="lg" disabled={submitted}>
-              {submitted ? (
-                <><CheckCircle size={18} className="mr-1" />{t(cf.success, lang)}</>
-              ) : (
-                <><Send size={18} className="mr-1" />{t(cf.submit, lang)}</>
-              )}
-            </Button>
           </form>
-          <div className="lg:col-span-2 space-y-6">
-            <div className="bg-cream rounded-2xl p-6 space-y-5">
-              <div className="flex items-start gap-3"><MapPin className="text-orange shrink-0 mt-1" size={20} /><span className="text-sm text-foreground">{f.address}</span></div>
-              <div className="flex items-center gap-3"><Phone className="text-orange shrink-0" size={20} /><span className="text-sm text-foreground">{f.phone}</span></div>
-              <div className="flex items-center gap-3"><Mail className="text-orange shrink-0" size={20} /><span className="text-sm text-foreground">{f.email}</span></div>
+          <div className="lg:col-span-2 space-y-6" data-reveal-child>
+            <div className="bg-cream rounded-2xl p-8 space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
+                  <MapPin className="text-accent" size={18} />
+                </div>
+                <span className="text-sm text-foreground leading-relaxed pt-2">{f.address}</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
+                  <Phone className="text-accent" size={18} />
+                </div>
+                <span className="text-sm text-foreground">{f.phone}</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
+                  <Mail className="text-accent" size={18} />
+                </div>
+                <a href={`mailto:${f.email}`} className="text-sm text-foreground hover:text-accent transition-colors">{f.email}</a>
+              </div>
             </div>
           </div>
         </div>

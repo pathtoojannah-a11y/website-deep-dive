@@ -12,15 +12,15 @@ const partners = [
 
 export default function PartnersBar() {
   const { lang } = useLanguage();
-  const title: T = { en: "Our Technology Partners", fr: "Nos partenaires technologiques" };
+  const title: T = { en: "Powered by best-in-class tools", fr: "Propulsé par les meilleurs outils" };
 
   return (
-    <section className="py-16 bg-background border-y border-border">
+    <section className="py-14 bg-background border-y border-border/50" data-reveal>
       <div className="container mx-auto px-4">
-        <p className="text-center text-sm text-muted-foreground mb-8 font-medium uppercase tracking-wider">{t(title, lang)}</p>
+        <p data-reveal-child className="text-center font-sans text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground mb-8">{t(title, lang)}</p>
         <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16">
           {partners.map((p) => (
-            <img key={p.name} src={p.logo} alt={p.name} className="h-8 md:h-10 object-contain opacity-70 hover:opacity-100 transition-opacity" />
+            <img key={p.name} src={p.logo} alt={p.name} className="h-7 md:h-9 object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300" data-reveal-child />
           ))}
         </div>
       </div>

@@ -13,7 +13,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Inter", "sans-serif"],
-        display: ["Plus Jakarta Sans", "sans-serif"],
+        serif: ["DM Serif Display", "serif"],
+        display: ["DM Serif Display", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -24,6 +25,7 @@ export default {
         navy: { DEFAULT: "hsl(var(--navy))", mid: "hsl(var(--navy-mid))" },
         orange: { DEFAULT: "hsl(var(--orange))", light: "hsl(var(--orange-light))", dark: "hsl(var(--orange-dark))" },
         cream: { DEFAULT: "hsl(var(--cream))", dark: "hsl(var(--cream-dark))" },
+        gold: "hsl(var(--gold))",
         body: "hsl(var(--body))",
         primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },
         secondary: { DEFAULT: "hsl(var(--secondary))", foreground: "hsl(var(--secondary-foreground))" },
