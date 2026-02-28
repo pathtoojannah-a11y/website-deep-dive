@@ -1,117 +1,95 @@
 
 
-# Visual & Content Upgrade — Fixing AI-Look, Bland Service Pages, and Premium Polish
+# Fix Pass — Research-Informed Service Page Differentiation + Visual Polish
 
-## User Feedback Summary
-1. **Ghost CTA button invisible** — white text on dark bg, no border visible
-2. **Trust strip (200+, CPA, 15+) looks AI-generated** — make it more professional/understated
-3. **"Why Namaca" photo** — replace with the uploaded before/after split image (messy desk vs clean dashboard)
-4. **Editorial spread cards** — remove the black card, make all cards white/cream with different colored borders (like Cloud-First Access orange border), keep Beyond Bookkeeping warm tint
-5. **Add "Cloud-Based Accounting" subtitle under NAMACA logo** in navbar
-6. **Hero dashboard image** — the reference (image-6) shows a floating/bending dashboard mockup, which is a cool effect to replicate
-7. **Expertise page industry images** — 2 of 4 use same image. Make healthcare look healthcare-related, e-commerce look commerce-related
-8. **Our Capabilities section** — be more creative, it's currently just a numbered list
-9. **Service pages are bland** — just text, no visual interest. They're the most important pages and need to feel $100K-worthy. Each should be visually distinct and compelling
-10. **Bookkeeping hero text is good** but rest of page is bland
-11. **Payroll hero image** should be payroll-related
-12. **All service pages need major visual upgrade** — more distinct layouts, images, visual interest
+## Research Findings
+
+From analyzing 20+ top B2B and professional services websites, here are the key patterns that differentiate service pages:
+
+**1. Each service page should feel like its own mini-landing page** — not a template with swapped text. The best sites (HITT, Toll Brothers, Painter Bros) use completely different section ordering, visual treatments, and content density per service.
+
+**2. Lead with pain/outcome, not the service name** — "Drowning in receipts?" converts better than "Bookkeeping Services". Already doing this partially.
+
+**3. Social proof AT the decision point** — stats, testimonials, and client logos placed mid-page near CTAs, not isolated in their own section. Best sites weave proof INTO the content.
+
+**4. Process transparency builds trust** — step-by-step breakdowns with clear deliverables. Vertical timelines with scroll animation work best (WyattWorks, Millhouse).
+
+**5. Cross-link related services** — "Clients who use Bookkeeping also benefit from our Fractional CFO services." This increases page views and mirrors how clients think.
+
+**6. Vary content density** — some services need deep explanation (CFO, Consulting), others need quick clarity (Payroll, AP). Page length should match complexity.
+
+**7. Avoid identical section ordering** — the #1 giveaway of template sites. Reorder: some pages lead with process, others with stats, others with comparison tables.
 
 ---
 
 ## Implementation Plan
 
-### 1. Home Page Fixes
+### 1. Lighten Hero Overlays
+**File:** `Hero.tsx`
+- Change image `opacity-30` to `opacity-45`
+- Lighten gradient from `via-navy/60` to `via-navy/40`
 
-**Ghost CTA button**: Fix border visibility — add `border-white/40` and ensure text is visible.
+### 2. Fix Navbar Subtitle Visibility
+**File:** `Navbar.tsx`
+- Already has "Cloud-Based Accounting" subtitle — increase size from `text-[9px]` to `text-[10px]`, make it more visible on both transparent and scrolled states
 
-**Trust strip redesign**: Replace the icon+text pattern with a cleaner, more editorial approach — simple text with subtle dividers, no icons (icons make it look template-y). Use slightly larger text, proper font weight. Something like: `200+ businesses served · CPA-level expertise · 15+ years`.
+### 3. Regenerate 4 Images
+- E-commerce: online storefront, shipping boxes, product shelves (NOT RFID/inventory accounting)
+- Professional Services: woman in modern office setting (user liked this)
+- Payroll: team/employees, paychecks, HR-related
+- Fractional CFO: clean, professional executive setting
 
-**"Why Namaca" section**: Copy the uploaded before/after split image (`before_after_split_1772293426773.png`) to `src/assets/` and use it to replace the current AI meeting room photo. This makes sense because it visually demonstrates the transformation Namaca provides — messy manual accounting vs clean cloud dashboard.
+### 4. Fix Service Page Stats Section
+**File:** `ServicePage.tsx`
+- Change from `bg-navy text-gold` to `bg-cream` with `text-navy` values and `text-accent` labels
+- Better centered, cleaner look
 
-**Editorial spread cards**: Remove the dark navy card (card 1). Make all 4 cards white/cream backgrounds with unique accent treatments:
-- Card 1 (Clean Desk): White card with blue-left border
-- Card 2 (Cloud Access): White card with orange border (as user liked)
-- Card 3 (Gain Clarity): White card with subtle shadow, clean
-- Card 4 (Beyond Bookkeeping): Warm gradient tint (keep as user liked)
+### 5. Remove Duplicate Before/After Image
+**File:** `ServicePage.tsx`
+- Remove the bookkeeping "From chaos to clarity" section (lines 318-334) — same image already on home page
 
-**Navbar subtitle**: Add small "Cloud-Based Accounting" text under the NAMACA logo.
+### 6. Fix Big Gaps (Payroll Split-Media)
+**File:** `ServicePage.tsx`
+- The `h-48` colored placeholder divs in payroll layout (idx===1, line 217) create dead space. Replace with actual content — use the service accent icon grid or remove the empty box entirely.
 
-**Hero dashboard image**: Add a CSS perspective/rotation transform to the dashboard image to create a floating/bending effect similar to the reference screenshot (image-6). Apply `transform: perspective(1200px) rotateY(-8deg)` with a subtle shadow.
+### 7. Convert Bookkeeping Process to Vertical
+**File:** `ServicePage.tsx`
+- Change horizontal timeline (idx===0) to vertical like other services for consistency and better scroll animation
 
-### 2. Expertise Page Fixes
+### 8. Make Service Pages More Distinct (Section Reordering)
+**File:** `ServicePage.tsx`
+- **Bookkeeping** (idx 0): Hero → Pain → Benefits → Process → Cross-link (Payroll) → Testimonial → FAQ → Contact → CTA
+- **Payroll** (idx 1): Hero → Stats → Pain → Benefits → Process → Cross-link (Bookkeeping) → Testimonial → FAQ → CTA
+- **Taxes** (idx 2): Hero → Pain → Benefits → Stats → Process → FAQ → Contact → CTA
+- **Fractional CFO** (idx 3): Hero → Comparison → Pain → Benefits → Process → Stats → Testimonial → CTA
+- **AP** (idx 4): Hero → Pain → Flow Diagram Process → Benefits → Stats → Cross-link (AR) → FAQ → CTA
+- **AR** (idx 5): Hero → Pain → Benefits → Stats → Process → Cross-link (AP) → FAQ → CTA
+- **Consulting** (idx 6): Hero → Pain → Editorial Benefits → Process → Stats → Testimonial → Contact → CTA
 
-**Industry images**: Generate 4 distinct AI images for each vertical:
-- Technology & SaaS: tech office/screens/code
-- E-Commerce: shipping/product/storefront
-- Healthcare: medical setting/clinic
-- Professional Services: office/consulting
+Add a "Related Services" cross-link component between sections for each service.
 
-**Our Capabilities section**: Redesign from plain numbered list to something more creative — cards with large faded numbers, subtle hover effects, and accent-colored top borders. Or an interactive accordion-style with expanding descriptions.
+### 9. Translate All Resources to French
+**File:** `src/data/resources.ts`
+- All 18 posts currently have identical EN text in the FR fields. Translate all titles and excerpts to proper French.
 
-### 3. Service Pages — Major Upgrade (All 7)
+### 10. Fix Resources Category Filter for FR
+**File:** `Resources.tsx`
+- Category buttons are hardcoded English ("All", "Accounting", etc.)
+- When in FR mode, categories should show French equivalents
+- Filter logic should match against the current language's category value
 
-This is the biggest change. Currently all service pages follow the exact same template: Hero → Pain Points → Benefits grid/list → Process grid → Testimonial → FAQ → Contact → CTA. It's bland and repetitive.
+### 11. Fix Resources Layout Jump
+**File:** `Resources.tsx`
+- When switching from "All" to a category, the featured article disappears causing content jump. Use consistent grid layout regardless of filter state.
 
-**Generate unique hero images per service:**
-- Bookkeeping: organized ledger/Xero dashboard
-- Payroll: team/employees/payday related
-- Taxes: tax forms/CRA documents/calculator
-- Fractional CFO: executive boardroom/strategy
-- AP: vendor invoices/payment processing
-- AR: cash flow/invoices/collections
-- Consulting: strategy meeting/whiteboard
+---
 
-**Distinct layout patterns per service page:**
-
-**Bookkeeping** (idx 0): 
-- Keep good hero headline
-- Benefits: Editorial spread with numbered cards (not bento grid)
-- Add a before/after visual section (reuse the split image concept)
-- Process: Horizontal timeline with connecting line
-
-**Payroll** (idx 1):
-- New payroll-specific hero image
-- Benefits: Split-media alternating (icon+text left, image right, then flip)
-- Process: Vertical timeline with dots
-- Add inline stat callout ("0 missed payrolls")
-
-**Taxes** (idx 2):
-- Benefits: Trust pillars layout (3 columns with icons)
-- Add a "deadline calendar" visual element
-- Process: Numbered cards in a row
-
-**Fractional CFO** (idx 3):
-- Benefits: Large editorial blocks with pull-quote style
-- Add comparison section ("Full-time CFO: $300K/yr vs Namaca: fraction of the cost")
-- Process: Phase-based visual
-
-**Accounts Payable** (idx 4):
-- Benefits: Horizontal showcase list (similar to service showcase on home)
-- Process: Flow diagram style (Capture → Approve → Pay)
-
-**Accounts Receivable** (idx 5):
-- Benefits: Bento grid with varying sizes
-- Add a "cash flow improvement" visual stat
-- Process: Split-media
-
-**Consulting** (idx 6):
-- Full editorial approach — large text blocks with pull-quotes
-- Benefits: Alternating left/right with large numbers
-- Process: Partnership-focused timeline
-
-**Add visual elements to ALL service pages:**
-- Inline stat callouts (dark mini-sections with 2-3 key numbers)
-- At least one image per service page (beyond just the hero)
-- Accent-colored section dividers
-- Unique per-service accent colors cascading to borders, icons, and hover states
-
-### 4. Stats Section
-- Consider adding stats to service pages (user asked "should we have proven results on all pages?" — yes, add a compact version)
-- Create a `StatsInline` variant — 2-3 stats in a row, not full-bleed, that can be dropped into service pages
-
-### 5. Files Changed
-- **Modified**: `Index.tsx`, `Navbar.tsx`, `Expertise.tsx`, `ServicePage.tsx`, `Hero.tsx`, `StatsSection.tsx`
-- **New assets**: Copy `before_after_split_1772293426773.png` to `src/assets/`
-- **AI-generated images**: 4 expertise verticals + 7 service hero images (or as many as practical)
-- **Total: ~8 files modified, 1-2 new assets, multiple AI images**
+## Files Changed
+- `Hero.tsx` — lighter overlays
+- `Navbar.tsx` — subtitle visibility
+- `ServicePage.tsx` — stats redesign, remove duplicate image, fix gaps, vertical process, section reordering, cross-links
+- `Expertise.tsx` — new industry images
+- `resources.ts` — full FR translations
+- `Resources.tsx` — fix category filter + layout
+- 4 new AI-generated images
 
