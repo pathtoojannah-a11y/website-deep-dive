@@ -1,59 +1,82 @@
 
 
-# Namaca.ca — Bilingual Accounting Firm Website Prototype
+# Update Namaca Site with Real Content from GitHub Repo & Live Site
 
-A clean, modern rebuild of the Namaca.ca website with French/English toggle, matching the original structure and content.
+## What Changes
 
-## 1. Language Toggle & Layout Shell
-- Add a French/English language toggle in the header
-- Create a reusable layout with sticky navbar (logo, nav links: Home, Expertise, Services, Contact Us button)
-- Store language preference in state, all text pulled from a translations file
+Replace placeholder/generic content across the entire site with real data extracted from `namaca.ca` and the `bakinrob/NAMAKA-code` GitHub repository.
 
-## 2. Hero Section
-- Large heading: "The Future of Accounting for SMEs & Startups"
-- Subtext about Namaca's combined team, technique, and technology approach
-- "Schedule a Call" CTA button
-- Image collage on the right (placeholder professional images)
-- Warm cream/beige background with orange accents (matching brand colors)
+## Data Sources Gathered
+- Live homepage content (French text, real testimonials, partner logos, contact info)
+- 18 real blog posts with titles, slugs, excerpts, and dates from `posts_full.json`
+- 189 asset URLs from `asset_urls.txt` (images, SVGs, icons)
+- Real page structure from `pages.json` (10 pages confirmed)
 
-## 3. "Why Choose Us" Tabbed Section
-- 4 tabs: Clean Desk vs Cluttered, Full Cloud Access, Gain Clarity, Beyond Bookkeeping
-- Each tab reveals bullet points and an illustration
-- Smooth tab transitions
+---
 
-## 4. Services Grid
-- 7 service cards in a responsive grid: Bookkeeping, Payroll, Tax Reporting, Fractional CFO, Accounts Payable, Accounts Receivable, Advisory
-- Each card has an icon, title, short description, and "Learn More" link
-- Decorative background image elements
+## Implementation Steps
 
-## 5. "Why Choose Us" Numbered List
-- 6 numbered items: 100% Online, No Re-training, Gain Clarity, Beyond Bookkeeping, Expert Solutions, Value Innovation
-- Vertical layout with large numbers and descriptions
+### 1. Update contact info & brand details in `translations.ts`
+- Email: `info@namaca.com` (not `info@namaca.ca`)
+- Address: `5915 Rue De Jumonville, Montréal, Québec H1M1R2, Canada`
+- Phone: `+1 (514) 819-1513`
+- Update footer tagline and CTA text to match live site
+- Nav CTA: "Contactez-nous" / "Contact us" (not "Book a Call")
 
-## 6. Industry Expertise & Stats
-- Section with animated counters: System-level expertise %, Years of experience, Client satisfaction rate, Clients served
-- Clean card layout with icons
+### 2. Update Home page (`Index.tsx`) with real French content
+- Hero title: "Le future de la Comptabilité pour les PME et les entreprises en démarrage"
+- Hero subtitle: real text from live site about Namaca's approach
+- "Why Choose Us" tabs: use real French bullet points (Bureau propre vs encombré, Accès complet dans le cloud, Gagner en clarté, Au-delà de la comptabilité)
+- "Why Us" numbered list: use real text (100% Online & Tech-Driven, No More Re-training, Gain Clarity, Beyond Bookkeeping, Expert Solutions, Value Innovation)
+- Services section title: "Service adapté à vos besoins uniques" with real French descriptions for each service
+- Stats section: "Expertise sectorielle" with real labels
+- Real testimonial: Greg Pritchard, Jun 25, 2024 — actual review text
+- Partners: use real logo image URLs from namaca.ca (Xero, Dext, Gusto, Plooto)
 
-## 7. Client Testimonials Carousel
-- Testimonial carousel with quote icon, review text, reviewer name and date
-- Previous/Next navigation
+### 3. Update service descriptions in `services.ts` with real French text
+- Bookkeeping/Comptabilité: real description from live site
+- Payroll/Service de paie: real description
+- Taxes/Rapport de taxes: real description about GST/HST/PST
+- Fractional CFO: real text
+- Accounts Payable/Comptes fournisseurs: real text
+- Accounts Receivable/Comptes clients: real text
+- Consulting/Services-Conseils: real text
+- Update service page titles to match live site (e.g., "Tenue de Livres", "Traitement de la Paie", "Taxes de Ventes", "Comptes Payables", "Comptes Recevables", "Service-Conseil")
 
-## 8. Partners Logo Bar
-- Partner logos row: Xero, Dext, Gusto, Plooto
+### 4. Update Resources page with real 18 blog posts
+Replace the current 18 placeholder posts in `resources.ts` with the real posts from `posts_full.json`:
+- Real titles (e.g., "5 steps to preparing for a financial audit", "Bitcoins aren't money, at least according to the CRA")
+- Real excerpts from the API
+- Real slugs matching the WordPress URLs
+- Real dates (all from September 2024)
+- Note: these are English-only posts on the live site — keep as-is
 
-## 9. Contact / Consultation Form
-- Form fields: First name, Last name, Email, Phone, Message
-- Submit button (UI only, no backend)
-- Company address, phone, email in footer area
+### 5. Add real images via external URLs
+- Partner logos: use `namaca.ca/wp-content/uploads/2024/09/xero-1.png`, `DEXTools-1.png`, `175069-1.png` (Gusto), `svg0-1.png`, `Ploto-black-png-logo-1.png`
+- Service icons: use the `hugeicons_calculate-*.svg` URLs from the asset list
+- Hero image: use `Frame-1000003816.png` and `1195156_1150-1.png`
+- Testimonial avatar: use `image-1.png` (Greg Pritchard)
+- "Why Choose Us" tab images: use `Frame-1000003751-1.png` through `Frame-1000003751-4.png` (Nov 2024)
+- Service section side image: use `6782-1-1.png` and `6782-1.png`
+- Stats section icons: use the `Frame-1000003756-*.svg` files
+- Update `PartnersBar.tsx` to render `<img>` tags instead of text
+- Update `Hero.tsx` to support image content on the right side
+- Update `TestimonialsSection.tsx` to show avatar images
 
-## 10. Footer
-- Navigation links, social media icons (Facebook, Instagram, X, Google+)
-- Company contact info
+### 6. Update Footer with real data
+- Social links: Facebook, Instagram, X (Twitter), Google+
+- Real navigation: Accueil, Expertise, Nos services, Ressources
+- Real contact block matching live site layout
 
-## Design System
-- **Primary color**: Dark navy (#1B2A4A)
-- **Accent**: Orange (#E8872B) for highlights and CTAs
-- **Background**: Warm cream (#FFF8F0) for hero, white for other sections
-- **Typography**: Clean sans-serif, bold headings
-- **Rounded buttons** with orange fill
+### 7. Typography update
+- Swap font import from `Plus Jakarta Sans` to `Open Sauce Sans` (or closest available — the live site uses this for headings)
+- Keep `Inter` for body text
+
+---
+
+## Technical Notes
+- Images will be referenced directly from `namaca.ca/wp-content/uploads/` — no local downloads needed
+- The site is primarily French on the live version; English translations will be maintained as secondary
+- No backend changes required — all updates are to static data files and components
+- ~8 files will be modified: `translations.ts`, `Index.tsx`, `services.ts`, `resources.ts`, `PartnersBar.tsx`, `TestimonialsSection.tsx`, `Hero.tsx`, `Footer.tsx`, `index.css`
 
