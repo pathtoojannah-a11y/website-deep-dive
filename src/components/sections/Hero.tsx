@@ -11,9 +11,10 @@ interface HeroProps {
   ctaLink?: string;
   children?: ReactNode;
   bgClass?: string;
+  heroImage?: string;
 }
 
-export default function Hero({ badge, title, subtitle, ctaText, ctaLink = "/expertise#contact", children, bgClass = "bg-cream" }: HeroProps) {
+export default function Hero({ badge, title, subtitle, ctaText, ctaLink = "/expertise#contact", children, bgClass = "bg-cream", heroImage }: HeroProps) {
   return (
     <section className={`${bgClass} relative overflow-hidden`}>
       <div className="container mx-auto px-4 py-20 md:py-28">
@@ -37,7 +38,11 @@ export default function Hero({ badge, title, subtitle, ctaText, ctaLink = "/expe
               </Button>
             )}
           </div>
-          <div className="hidden lg:block">{children}</div>
+          <div className="hidden lg:block">
+            {children ? children : heroImage ? (
+              <img src={heroImage} alt="" className="w-full max-w-lg mx-auto rounded-2xl" />
+            ) : null}
+          </div>
         </div>
       </div>
     </section>
