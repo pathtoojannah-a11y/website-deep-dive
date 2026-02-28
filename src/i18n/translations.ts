@@ -7,29 +7,29 @@ export const t = (obj: T, lang: Lang) => obj[lang];
 export const nav = {
   home: { en: "Home", fr: "Accueil" } as T,
   expertise: { en: "Expertise", fr: "Expertise" } as T,
-  services: { en: "Services", fr: "Services" } as T,
+  services: { en: "Services", fr: "Nos services" } as T,
   resources: { en: "Resources", fr: "Ressources" } as T,
-  bookCall: { en: "Book a Call", fr: "Réserver un appel" } as T,
+  bookCall: { en: "Contact Us", fr: "Contactez-nous" } as T,
 };
 
 export const serviceLinks = [
-  { slug: "bookkeeping", label: { en: "Bookkeeping", fr: "Tenue de livres" } as T },
-  { slug: "payroll", label: { en: "Payroll", fr: "Paie" } as T },
-  { slug: "taxes", label: { en: "Taxes", fr: "Impôts" } as T },
+  { slug: "bookkeeping", label: { en: "Bookkeeping", fr: "Tenue de Livres" } as T },
+  { slug: "payroll", label: { en: "Payroll", fr: "Traitement de la Paie" } as T },
+  { slug: "taxes", label: { en: "Taxes", fr: "Taxes de Ventes" } as T },
   { slug: "fractional-cfo", label: { en: "Fractional CFO", fr: "Directeur financier à temps partiel" } as T },
-  { slug: "accounts-payable", label: { en: "Accounts Payable", fr: "Comptes fournisseurs" } as T },
-  { slug: "accounts-receivable", label: { en: "Accounts Receivable", fr: "Comptes clients" } as T },
-  { slug: "consulting-advisory", label: { en: "Consulting / Advisory", fr: "Consultation / Conseils" } as T },
+  { slug: "accounts-payable", label: { en: "Accounts Payable", fr: "Comptes Payables" } as T },
+  { slug: "accounts-receivable", label: { en: "Accounts Receivable", fr: "Comptes Recevables" } as T },
+  { slug: "consulting-advisory", label: { en: "Consulting / Advisory", fr: "Service-Conseil" } as T },
 ];
 
 export const footer = {
-  tagline: { en: "Modern cloud accounting for businesses that want to grow.", fr: "Comptabilité infonuagique moderne pour les entreprises ambitieuses." } as T,
+  tagline: { en: "Modern cloud accounting for SMEs and startups that want to grow.", fr: "Comptabilité infonuagique moderne pour les PME et startups ambitieuses." } as T,
   quickLinks: { en: "Quick Links", fr: "Liens rapides" } as T,
   servicesTitle: { en: "Services", fr: "Services" } as T,
   contactTitle: { en: "Contact", fr: "Contact" } as T,
-  address: "1200 Avenue McGill College, Suite 1100, Montréal, QC H3B 4G7",
-  phone: "+1 (514) 555-0123",
-  email: "info@namaca.ca",
+  address: "5915 Rue De Jumonville, Montréal, Québec H1M1R2, Canada",
+  phone: "+1 (514) 819-1513",
+  email: "info@namaca.com",
   rights: { en: "All rights reserved.", fr: "Tous droits réservés." } as T,
 };
 
