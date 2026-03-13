@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 
 /**
  * Lightweight scroll-linked parallax.
@@ -7,6 +8,7 @@ import { useEffect, useRef, useCallback } from "react";
  */
 export function useParallax() {
   const ticking = useRef(false);
+  const { pathname } = useLocation();
 
   const updateParallax = useCallback(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -60,5 +62,5 @@ export function useParallax() {
       window.removeEventListener("scroll", onScroll);
       observer.disconnect();
     };
-  }, [updateParallax]);
+  }, [pathname, updateParallax]);
 }
