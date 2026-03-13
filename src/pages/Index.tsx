@@ -1,6 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t, Lang } from "@/i18n/translations";
 import Layout from "@/components/Layout";
+import SEOHead from "@/components/SEOHead";
 import Hero from "@/components/sections/Hero";
 import PartnersBar from "@/components/sections/PartnersBar";
 import ServiceShowcase from "@/components/sections/ServiceShowcase";
@@ -15,15 +16,15 @@ import InlineTestimonial from "@/components/sections/InlineTestimonial";
 import HeroActivityCard from "@/components/sections/HeroActivityCard";
 import heroHome from "@/assets/hero-home.jpg";
 import beforeAfterSplit from "@/assets/before-after-split.png";
-import { Cloud, BarChart3, Monitor, ShieldCheck, Workflow, Clock, Phone } from "lucide-react";
+import { Cloud, BarChart3, Monitor, ShieldCheck, Workflow, Clock, Phone, FolderOpen, TrendingUp, type LucideIcon } from "lucide-react";
 
 type T = Record<Lang, string>;
 
-const approach: { title: T; desc: T }[] = [
-  { title: { en: "Clean Desk Policy", fr: "Bureau propre" }, desc: { en: "All financial documents organized in the cloud. No more lost receipts or missing invoices. Your books stay pristine.", fr: "Tous vos documents financiers sont organises dans le cloud. Plus de recus perdus ni de factures manquantes." } },
-  { title: { en: "Cloud-First Access", fr: "Acces infonuagique" }, desc: { en: "Access your financials from anywhere, any device. Bank-level security and real-time collaboration.", fr: "Accedez a vos finances de partout, sur tout appareil. Securite de niveau bancaire et collaboration en temps reel." } },
-  { title: { en: "Gain Clarity", fr: "Gagner en clarte" }, desc: { en: "Custom dashboards for KPIs, monthly reporting, and visibility on cash flow.", fr: "Tableaux de bord KPI personnalises, rapports mensuels, et visibilite sur la tresorerie." } },
-  { title: { en: "Beyond Bookkeeping", fr: "Au-dela de la comptabilite" }, desc: { en: "Strategic advisory, fractional CFO support, tax planning, and industry-specific expertise.", fr: "Conseil strategique, support CFO fractionnel, planification fiscale, et expertise sectorielle." } },
+const approach: { icon: LucideIcon; title: T; desc: T }[] = [
+  { icon: FolderOpen, title: { en: "Clean Desk Policy", fr: "Bureau propre" }, desc: { en: "All financial documents organized in the cloud. No more lost receipts or missing invoices. Your books stay pristine.", fr: "Tous vos documents financiers sont organises dans le cloud. Plus de recus perdus ni de factures manquantes." } },
+  { icon: Cloud, title: { en: "Cloud-First Access", fr: "Acces infonuagique" }, desc: { en: "Access your financials from anywhere, any device. Bank-level security and real-time collaboration.", fr: "Accedez a vos finances de partout, sur tout appareil. Securite de niveau bancaire et collaboration en temps reel." } },
+  { icon: BarChart3, title: { en: "Gain Clarity", fr: "Gagner en clarte" }, desc: { en: "Custom dashboards for KPIs, monthly reporting, and visibility on cash flow.", fr: "Tableaux de bord KPI personnalises, rapports mensuels, et visibilite sur la tresorerie." } },
+  { icon: TrendingUp, title: { en: "Beyond Bookkeeping", fr: "Au-dela de la comptabilite" }, desc: { en: "Strategic advisory, fractional CFO support, tax planning, and industry-specific expertise.", fr: "Conseil strategique, support CFO fractionnel, planification fiscale, et expertise sectorielle." } },
 ];
 
 const homeFAQ: { q: T; a: T }[] = [
@@ -38,9 +39,13 @@ export default function Index() {
 
   return (
     <Layout>
+      <SEOHead
+        title={lang === "en" ? "Cloud Accounting for Canadian SMEs" : "Comptabilité infonuagique pour PME canadiennes"}
+        description={lang === "en" ? "Modern cloud-first accounting, bookkeeping, payroll, tax compliance and fractional CFO services. 200+ clients served." : "Comptabilité infonuagique moderne, tenue de livres, paie, conformité fiscale et services CFO. 200+ clients desservis."}
+      />
       <Hero
         variant="cinematic"
-        title={lang === "en" ? "Your finances, handled." : "Vos finances, gerees."}
+        title={lang === "en" ? "Clean books. Clear numbers. Zero stress." : "Livres propres. Chiffres clairs. Zéro stress."}
         subtitle={lang === "en" ? "From bookkeeping to CFO advisory, we keep your books clean, your payroll on time, and your numbers ready — so you never have to worry about it again." : "De la tenue de livres au conseil CFO, nous gardons vos livres propres, votre paie a temps et vos chiffres prets — pour que vous n'ayez plus jamais a vous en soucier."}
         ctaText={lang === "en" ? "Fix your books" : "Reparons vos livres"}
         ghostCtaText={lang === "en" ? "Explore Services" : "Decouvrir nos services"}
@@ -63,9 +68,11 @@ export default function Index() {
 
       <PartnersBar />
 
-      <ServiceShowcase />
+      <div id="services">
+        <ServiceShowcase />
+      </div>
 
-      <section className="py-24 md:py-32 lg:py-40 bg-background" data-reveal>
+      <section id="why-namaca" className="py-24 md:py-32 lg:py-40 bg-background" data-reveal>
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div data-reveal-child>
@@ -122,7 +129,7 @@ export default function Index() {
 
       <StatsSection />
 
-      <section className="py-24 md:py-32 lg:py-40 bg-cream" data-reveal>
+      <section id="approach" className="py-24 md:py-32 lg:py-40 bg-cream" data-reveal>
         <div className="container mx-auto px-4 max-w-5xl">
           <p data-reveal-child className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-4">{lang === "en" ? "Our Approach" : "Notre approche"}</p>
           <h2 data-reveal-child className="font-display text-3xl md:text-4xl text-foreground mb-14 max-w-lg">{lang === "en" ? "How we transform your back office" : "Comment nous transformons votre comptabilite"}</h2>
@@ -141,6 +148,9 @@ export default function Index() {
                 <span className="absolute top-4 right-6 font-display text-7xl leading-none pointer-events-none select-none text-accent/[0.12]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
+                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
+                  <block.icon className="text-accent" size={20} />
+                </div>
                 <h3 className="font-display text-xl md:text-2xl mb-3 text-foreground">{t(block.title, lang)}</h3>
                 <p className="text-sm leading-relaxed text-muted-foreground">{t(block.desc, lang)}</p>
               </div>
@@ -149,14 +159,24 @@ export default function Index() {
         </div>
       </section>
 
+      <InlineTestimonial
+        quote={lang === "en" ? "Their process-driven approach saved us 20+ hours a month. We finally have time to focus on growing the business." : "Leur approche axée sur les processus nous a fait gagner 20+ heures par mois. Nous avons enfin le temps de nous concentrer sur la croissance."}
+        author="Sophie Tremblay"
+        role={lang === "en" ? "COO, Tech Startup" : "COO, Startup technologique"}
+      />
+
       <MiniCTA
         heading={{ en: "Ready to transform your back office?", fr: "Prêt à transformer votre comptabilité?" }}
         buttonText={{ en: "Let's Talk", fr: "Parlons-en" }}
         variant="dark"
       />
 
-      <TestimonialsSection />
-      <FAQSection items={homeFAQ} />
+      <div id="testimonials">
+        <TestimonialsSection />
+      </div>
+      <div id="faq">
+        <FAQSection items={homeFAQ} />
+      </div>
       <ContactSection />
       <CTASection />
     </Layout>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
+import SEOHead from "@/components/SEOHead";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { nonPrimaryHomeServices, primaryHomeServices, serviceGroups } from "@/data/serviceCatalog";
 import { t } from "@/i18n/translations";
@@ -18,6 +19,7 @@ export default function Services() {
   const { lang } = useLanguage();
   return (
     <Layout>
+      <SEOHead title={lang === "en" ? "Services" : "Services"} description={lang === "en" ? "Bookkeeping, payroll, tax compliance, fractional CFO and advisory services for Canadian businesses." : "Tenue de livres, paie, conformité fiscale, CFO fractionnel et services-conseils pour les entreprises canadiennes."} />
       <section className="bg-navy py-24 md:py-32 section-dark-depth hero-gradient-mesh" data-reveal>
         <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
           <p data-reveal-child className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-gold mb-4">

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t, Lang } from "@/i18n/translations";
 import Layout from "@/components/Layout";
+import SEOHead from "@/components/SEOHead";
 import Hero from "@/components/sections/Hero";
 import ContactSection from "@/components/sections/ContactSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
@@ -36,6 +37,7 @@ export default function Expertise() {
 
   return (
     <Layout>
+      <SEOHead title={lang === "en" ? "Industry Expertise" : "Expertise sectorielle"} description={lang === "en" ? "Specialized accounting for tech startups, ecommerce, healthcare, and professional services." : "Comptabilité spécialisée pour startups tech, ecommerce, santé et services professionnels."} />
       <Hero
         variant="split"
         layoutTone="light"

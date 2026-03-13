@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/i18n/translations";
 import Layout from "@/components/Layout";
+import SEOHead from "@/components/SEOHead";
 import { resourcesPage, posts } from "@/data/resources";
 import { Calendar, ArrowRight } from "lucide-react";
 
@@ -29,6 +30,7 @@ export default function Resources() {
 
   return (
     <Layout>
+      <SEOHead title={lang === "en" ? "Resources & Insights" : "Ressources et conseils"} description={lang === "en" ? "Accounting tips, financial insights, and business resources for Canadian SMEs." : "Conseils comptables, perspectives financières et ressources pour les PME canadiennes."} />
       {/* Hero */}
       <section className="bg-navy py-20 md:py-28 relative overflow-hidden" data-reveal>
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
