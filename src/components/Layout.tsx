@@ -2,9 +2,11 @@ import { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useParallax } from "@/hooks/useParallax";
 
 export default function Layout({ children }: { children: ReactNode }) {
   useScrollReveal();
+  useParallax();
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">

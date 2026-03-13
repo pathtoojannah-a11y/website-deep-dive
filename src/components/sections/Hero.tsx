@@ -43,6 +43,11 @@ export default function Hero({
         )}
         <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[150px] pointer-events-none" />
         <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
+        {/* Floating geometric shapes for depth */}
+        <div className="hero-shape hero-shape--1 hidden md:block" aria-hidden="true" />
+        <div className="hero-shape hero-shape--2 hidden md:block" aria-hidden="true" />
+        <div className="hero-shape hero-shape--3 hidden lg:block" aria-hidden="true" />
+        <div className="hero-shape hero-shape--4 hidden lg:block" aria-hidden="true" />
         <div className="container mx-auto px-4 py-32 relative z-10" data-reveal>
           <div className={mediaSlot ? "grid lg:grid-cols-2 gap-12 items-end" : undefined}>
             <div className={mediaSlot ? "max-w-2xl" : "max-w-3xl"}>

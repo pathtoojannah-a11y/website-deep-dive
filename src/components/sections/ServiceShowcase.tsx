@@ -141,6 +141,12 @@ export default function ServiceShowcase() {
         <div
           className="spotlight-grid grid md:grid-cols-3 gap-5 transition-all duration-300"
           key={activeCategory}
+          onMouseMove={(e) => {
+            const grid = e.currentTarget;
+            const rect = grid.getBoundingClientRect();
+            grid.style.setProperty("--spotlight-x", `${e.clientX - rect.left}px`);
+            grid.style.setProperty("--spotlight-y", `${e.clientY - rect.top}px`);
+          }}
         >
           {services.map((service, i) => {
             const isPrimary = i === 0;
@@ -150,8 +156,8 @@ export default function ServiceShowcase() {
               <Link
                 key={service.slug}
                 to={`/${service.slug}`}
-                className={`spotlight-card group relative rounded-2xl border border-border/60 bg-card overflow-hidden hover:-translate-y-1 transition-all duration-300 ${
-                  isPrimary ? "md:col-span-2 md:row-span-2" : ""
+                className={`spotlight-card spotlight-cursor group relative rounded-2xl border border-border/60 bg-card overflow-hidden hover:-translate-y-1 transition-all duration-300 card-glow-hover ${
+                  isPrimary ? "md:col-span-2 md:row-span-2 shimmer" : ""
                 }`}
                 data-reveal-child
                 style={{ animationDelay: `${i * 80}ms` }}

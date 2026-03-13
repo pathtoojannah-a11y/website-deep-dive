@@ -44,7 +44,7 @@ export default function Navbar() {
     `text-sm font-medium transition-colors ${active ? "text-accent" : "text-foreground/80 hover:text-foreground"}`;
 
   return (
-    <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-xl shadow-sm border-b border-border/30" : "bg-transparent"}`}>
+    <nav className={`sticky top-0 z-50 transition-all duration-500 ${scrolled ? "bg-background/80 backdrop-blur-2xl shadow-[0_1px_3px_rgba(0,0,0,0.05),0_8px_24px_rgba(0,0,0,0.03)] border-b border-border/20" : "bg-transparent"}`}>
       <div className="container mx-auto flex items-center justify-between h-[72px] px-4">
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="Namaca" className="h-9 w-auto" />

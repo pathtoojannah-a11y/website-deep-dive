@@ -85,7 +85,7 @@ export default function HeroActivityCard({ lang }: { lang: Lang }) {
   });
 
   return (
-    <div className="rounded-2xl border border-white/[0.12] bg-gradient-to-br from-white/[0.08] to-white/[0.03] backdrop-blur-xl shadow-2xl p-6 w-full max-w-md mx-auto animate-float">
+    <div className="rounded-2xl border border-white/[0.15] bg-gradient-to-br from-white/[0.1] via-white/[0.06] to-white/[0.02] backdrop-blur-2xl shadow-[0_8px_64px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.05)_inset] p-6 w-full max-w-md mx-auto animate-float">
       {/* Browser chrome */}
       <div className="flex items-center gap-2 mb-5">
         <div className="w-2.5 h-2.5 rounded-full bg-rose-400/80" />

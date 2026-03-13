@@ -11,12 +11,12 @@ import FAQSection from "@/components/sections/FAQSection";
 import CTASection from "@/components/sections/CTASection";
 import ContactSection from "@/components/sections/ContactSection";
 import MiniCTA from "@/components/sections/MiniCTA";
-import IconBenefitStrip from "@/components/sections/IconBenefitStrip";
 import InlineTestimonial from "@/components/sections/InlineTestimonial";
 import HeroActivityCard from "@/components/sections/HeroActivityCard";
-import heroHome from "@/assets/hero-home.jpg";
+import Tilt3DCard from "@/components/Tilt3DCard";
+import WaveDivider from "@/components/WaveDivider";
 import beforeAfterSplit from "@/assets/before-after-split.png";
-import { Cloud, BarChart3, Monitor, ShieldCheck, Workflow, Clock, Phone, FolderOpen, TrendingUp, type LucideIcon } from "lucide-react";
+import { Cloud, BarChart3, Monitor, Phone, FolderOpen, TrendingUp, type LucideIcon } from "lucide-react";
 
 type T = Record<Lang, string>;
 
@@ -66,6 +66,9 @@ export default function Index() {
         </div>
       </Hero>
 
+      <div className="relative section-wave">
+        <WaveDivider position="bottom" fillColor="hsl(220 14% 98%)" />
+      </div>
       <PartnersBar />
 
       <div id="services">
@@ -85,7 +88,7 @@ export default function Index() {
               </p>
             </div>
             <div className="hidden lg:block" data-reveal-child>
-              <div className="relative" style={{ perspective: "1200px" }}>
+              <div className="relative" style={{ perspective: "1200px" }} data-parallax-y="0.08">
                 <img
                   src={beforeAfterSplit}
                   alt="Before and after accounting operations"
@@ -129,31 +132,44 @@ export default function Index() {
 
       <StatsSection />
 
+      <div className="relative section-wave bg-navy">
+        <WaveDivider position="bottom" fillColor="hsl(220 14% 96%)" />
+      </div>
+
       <section id="approach" className="py-24 md:py-32 lg:py-40 bg-cream" data-reveal>
         <div className="container mx-auto px-4 max-w-5xl">
           <p data-reveal-child className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-4">{lang === "en" ? "Our Approach" : "Notre approche"}</p>
           <h2 data-reveal-child className="font-display text-3xl md:text-4xl text-foreground mb-14 max-w-lg">{lang === "en" ? "How we transform your back office" : "Comment nous transformons votre comptabilite"}</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {approach.map((block, i) => (
-              <div
+              <Tilt3DCard
                 key={i}
-                className={`relative rounded-2xl p-8 md:p-10 card-3d ${
-                  i === 0 ? "bg-card border-l-4 border-l-blue-500 shadow-md" :
-                  i === 1 ? "bg-card border-l-4 border-l-accent shadow-md" :
-                  i === 2 ? "bg-card shadow-lg border border-border/40" :
-                  "bg-gradient-to-br from-accent/5 to-gold/5 border border-accent/10"
+                className={`rounded-2xl gradient-border ${
+                  i === 0 ? "border-l-4 border-l-blue-500" :
+                  i === 1 ? "border-l-4 border-l-accent" :
+                  i === 2 ? "border border-border/40" :
+                  "border border-accent/10"
                 }`}
-                data-reveal-child
               >
-                <span className="absolute top-4 right-6 font-display text-7xl leading-none pointer-events-none select-none text-accent/[0.12]">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
-                  <block.icon className="text-accent" size={20} />
+                <div
+                  className={`relative rounded-2xl p-8 md:p-10 ${
+                    i === 0 ? "bg-card shadow-md" :
+                    i === 1 ? "bg-card shadow-md" :
+                    i === 2 ? "bg-card shadow-lg" :
+                    "bg-gradient-to-br from-accent/5 to-gold/5"
+                  }`}
+                  data-reveal-child
+                >
+                  <span className="absolute top-4 right-6 font-display text-7xl leading-none pointer-events-none select-none text-accent/[0.12]">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
+                    <block.icon className="text-accent" size={20} />
+                  </div>
+                  <h3 className="font-display text-xl md:text-2xl mb-3 text-foreground">{t(block.title, lang)}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{t(block.desc, lang)}</p>
                 </div>
-                <h3 className="font-display text-xl md:text-2xl mb-3 text-foreground">{t(block.title, lang)}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{t(block.desc, lang)}</p>
-              </div>
+              </Tilt3DCard>
             ))}
           </div>
         </div>

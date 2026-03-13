@@ -9,8 +9,9 @@ export default function Footer() {
   const { lang } = useLanguage();
 
   return (
-    <footer className="bg-navy text-primary-foreground">
-      <div className="container mx-auto px-4 pt-16 pb-8">
+    <footer className="bg-navy text-primary-foreground footer-gradient-mesh">
+      <div className="footer-gradient-line" />
+      <div className="container mx-auto px-4 pt-16 pb-8 relative z-10">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
           {/* Brand */}
           <div>
@@ -20,7 +21,7 @@ export default function Footer() {
             <p className="text-sm text-primary-foreground/50 leading-relaxed max-w-xs">{t(f.tagline, lang)}</p>
             <div className="flex gap-3 mt-6">
               {[Facebook, Instagram, Twitter, Linkedin].map((Icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 rounded-full border border-primary-foreground/15 flex items-center justify-center text-primary-foreground/50 hover:text-gold hover:border-gold/40 transition-all" aria-label="Social link">
+                <a key={i} href="#" className="w-10 h-10 rounded-full border border-primary-foreground/15 flex items-center justify-center text-primary-foreground/50 hover:text-gold hover:border-gold/40 transition-all social-glow" aria-label="Social link">
                   <Icon size={16} />
                 </a>
               ))}
