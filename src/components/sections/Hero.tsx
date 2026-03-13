@@ -34,7 +34,7 @@ export default function Hero({
 }: HeroProps) {
   if (variant === "cinematic") {
     return (
-      <section className="relative hero-gradient-mesh min-h-[85vh] flex items-center overflow-hidden">
+      <section className="relative hero-gradient-mesh min-h-[70vh] lg:min-h-[85vh] flex items-center overflow-hidden">
         {heroImage && (
           <>
             <img src={heroImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-luminosity" />
@@ -55,7 +55,7 @@ export default function Hero({
               <p data-reveal-child className="text-lg md:text-xl text-primary-foreground/60 max-w-xl leading-relaxed mb-8">{subtitle}</p>
               <div data-reveal-child className="flex flex-wrap gap-4">
                 {ctaText && (
-                  <Button asChild className="bg-accent hover:bg-orange-dark text-accent-foreground rounded-full px-8 py-6 text-base font-semibold shadow-lg shadow-accent/25 hover:-translate-y-0.5 transition-all group" size="lg">
+                  <Button asChild className="bg-accent hover:bg-orange-dark text-accent-foreground rounded-full px-8 py-6 text-base font-semibold shadow-lg shadow-accent/25 hover:-translate-y-0.5 transition-all group cta-glow cta-pulse" size="lg">
                     <Link to={ctaLink}>
                       {ctaText}
                       <ArrowRight size={18} className="ml-1.5 group-hover:translate-x-1 transition-transform" />
@@ -63,7 +63,7 @@ export default function Hero({
                   </Button>
                 )}
                 {ghostCtaText && ghostCtaLink && (
-                  <Button asChild variant="outline" className="rounded-full px-8 py-6 text-base font-medium border border-white/30 text-white bg-white/10 backdrop-blur-sm hover:bg-white/20 hover:-translate-y-0.5 transition-all" size="lg">
+                  <Button asChild variant="outline" className="rounded-full px-8 py-6 text-base font-medium border border-white/30 text-white bg-white/10 backdrop-blur-sm hover:bg-white/20 hover:-translate-y-0.5 transition-all cta-glow" size="lg">
                     <Link to={ghostCtaLink}>{ghostCtaText}</Link>
                   </Button>
                 )}

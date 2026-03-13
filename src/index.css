@@ -147,13 +147,33 @@
   }
 }
 
-/* Gradient mesh hero background */
+/* Gradient mesh hero background — animated */
 .hero-gradient-mesh {
   background: hsl(222 40% 8%);
   background-image:
     radial-gradient(ellipse at 20% 50%, rgba(59,130,246,0.12) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 20%, rgba(168,85,247,0.08) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 80%, rgba(207,126,46,0.06) 0%, transparent 50%);
+  position: relative;
+}
+
+.hero-gradient-mesh::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 600px 600px at 25% 40%, rgba(59,130,246,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 75% 60%, rgba(207,126,46,0.08) 0%, transparent 70%);
+  animation: meshDrift 12s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes meshDrift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.05); }
+  100% { transform: translate(-20px, 15px) scale(0.97); }
 }
 
 .hero-gradient-mesh::after {
@@ -232,6 +252,82 @@
   animation: scaleIn 0.4s ease-out;
 }
 
+/* CTA button glow on hover */
+.cta-glow {
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.cta-glow:hover {
+  box-shadow:
+    0 0 24px rgba(207, 126, 46, 0.35),
+    0 4px 16px rgba(207, 126, 46, 0.2);
+}
+
+/* Subtle pulse on hero CTA to draw attention */
+.cta-pulse {
+  animation: ctaPulse 3s ease-in-out infinite;
+}
+
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 4px 15px rgba(207, 126, 46, 0.25); }
+  50% { box-shadow: 0 4px 30px rgba(207, 126, 46, 0.45), 0 0 60px rgba(207, 126, 46, 0.15); }
+}
+
+/* Floating animation for hero activity card */
+.animate-float {
+  animation: gentleFloat 4s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* 3D card tilt on hover */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.card-3d:hover {
+  transform: perspective(800px) rotateX(2deg) rotateY(-3deg) translateY(-4px);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.04);
+}
+
+/* Icon hover scale + color shift */
+.icon-hover {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.icon-hover:hover {
+  transform: scale(1.15);
+}
+
+.icon-hover:hover .text-accent {
+  color: hsl(30 100% 52%);
+}
+
+/* Service card lift + shadow expand */
+.card-lift {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 16px 32px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* Parallax-ready section */
+.parallax-bg {
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] {
     opacity: 1;
@@ -242,6 +338,14 @@
     opacity: 1;
     transform: none;
     animation: none;
+  }
+  .hero-gradient-mesh::before,
+  .animate-float,
+  .cta-pulse {
+    animation: none;
+  }
+  .card-3d:hover {
+    transform: none;
   }
 }
 

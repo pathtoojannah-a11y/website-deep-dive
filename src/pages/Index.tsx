@@ -8,12 +8,14 @@ import StatsSection from "@/components/sections/StatsSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import CTASection from "@/components/sections/CTASection";
+import ContactSection from "@/components/sections/ContactSection";
+import MiniCTA from "@/components/sections/MiniCTA";
 import IconBenefitStrip from "@/components/sections/IconBenefitStrip";
 import InlineTestimonial from "@/components/sections/InlineTestimonial";
 import HeroActivityCard from "@/components/sections/HeroActivityCard";
 import heroHome from "@/assets/hero-home.jpg";
 import beforeAfterSplit from "@/assets/before-after-split.png";
-import { Cloud, BarChart3, Monitor, ShieldCheck, Workflow, Clock } from "lucide-react";
+import { Cloud, BarChart3, Monitor, ShieldCheck, Workflow, Clock, Phone } from "lucide-react";
 
 type T = Record<Lang, string>;
 
@@ -51,6 +53,11 @@ export default function Index() {
           <span>{lang === "en" ? "CPA-level expertise" : "Expertise niveau CPA"}</span>
           <span className="text-primary-foreground/20">.</span>
           <span>{lang === "en" ? "15+ years experience" : "15+ ans d'experience"}</span>
+          <span className="text-primary-foreground/20">.</span>
+          <a href="tel:+15148191513" className="inline-flex items-center gap-1.5 text-primary-foreground/50 hover:text-accent transition-colors">
+            <Phone size={14} />
+            +1 (514) 819-1513
+          </a>
         </div>
       </Hero>
 
@@ -89,8 +96,8 @@ export default function Index() {
             ].map((p, i) => {
               const Icon = p.icon;
               return (
-                <div key={i} className="text-center">
-                  <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
+                <div key={i} className="text-center icon-hover cursor-default">
+                  <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3 transition-all duration-300 hover:bg-accent/20 hover:scale-110">
                     <Icon className="text-accent" size={22} />
                   </div>
                   <div className="font-display text-2xl text-foreground mb-1">{p.stat}</div>
@@ -101,6 +108,11 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      <MiniCTA
+        heading={{ en: "See how we can streamline your finances", fr: "Découvrez comment nous pouvons simplifier vos finances" }}
+        buttonText={{ en: "Book a Free Consultation", fr: "Réservez une consultation gratuite" }}
+      />
 
       <InlineTestimonial
         quote={lang === "en" ? "Namaca gave us the financial clarity to move faster without increasing risk." : "Namaca nous a donne la clarte financiere pour aller plus vite sans augmenter le risque."}
@@ -118,7 +130,7 @@ export default function Index() {
             {approach.map((block, i) => (
               <div
                 key={i}
-                className={`relative rounded-2xl p-8 md:p-10 transition-transform hover:-translate-y-1 duration-300 ${
+                className={`relative rounded-2xl p-8 md:p-10 card-3d ${
                   i === 0 ? "bg-card border-l-4 border-l-blue-500 shadow-md" :
                   i === 1 ? "bg-card border-l-4 border-l-accent shadow-md" :
                   i === 2 ? "bg-card shadow-lg border border-border/40" :
@@ -126,7 +138,7 @@ export default function Index() {
                 }`}
                 data-reveal-child
               >
-                <span className="absolute top-4 right-6 font-display text-7xl leading-none pointer-events-none select-none text-foreground/[0.04]">
+                <span className="absolute top-4 right-6 font-display text-7xl leading-none pointer-events-none select-none text-accent/[0.12]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="font-display text-xl md:text-2xl mb-3 text-foreground">{t(block.title, lang)}</h3>
@@ -137,8 +149,15 @@ export default function Index() {
         </div>
       </section>
 
+      <MiniCTA
+        heading={{ en: "Ready to transform your back office?", fr: "Prêt à transformer votre comptabilité?" }}
+        buttonText={{ en: "Let's Talk", fr: "Parlons-en" }}
+        variant="dark"
+      />
+
       <TestimonialsSection />
       <FAQSection items={homeFAQ} />
+      <ContactSection />
       <CTASection />
     </Layout>
   );
